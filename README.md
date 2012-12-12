@@ -1,4 +1,4 @@
 standupper
 ==========
 
-A simple tool for conducting online scrumm standup meetings.
+A simple tool for conducting scrumm standup meetings online.
