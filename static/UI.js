@@ -195,6 +195,7 @@ window.UI = (function (document, window, undefined) {
     return {
         init : init,
         redrawEntry : redrawEntry,
-        drawDay: drawDay
+        drawDay: drawDay,
+        fatalError : fatalError
     };
 }(document, window));
