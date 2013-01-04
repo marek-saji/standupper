@@ -133,15 +133,6 @@ window.UI = (function (document, window, undefined) {
         userSection.dataset.date = entry.date;
         userSection.classList.add("entry");
 
-        avatar.src = "http://gravatar.com/avatar/"
-                   + entry.user_ident
-                   + "?s=" + _AVATAR_SIZE
-                   // use ident icons for non-registered e-mails
-                   + "&d=identicon";
-        avatar.width  = _AVATAR_SIZE;
-        avatar.height = _AVATAR_SIZE;
-        header.appendChild(avatar);
-
         // hCard microformat
         header.classList.add("hcard");
         avatar.classList.add("photo");

@@ -218,13 +218,13 @@ everyone.now.initializeDay = function (date, success, failure) {
  *        May contain:
  *        - {string} entry.user_id Defaults to current `user.name`.
  *        - {string} entry.user_ Defaults to current `user._id`.
- *        - {string} entry.user_ident Defaults to current `user.mail` md5 hash.
  */
 everyone.now.storeEntry = function (date, entry, success, failure) {
     date = new Date(date); // may be a Date or string
     var dayDate = new Date(date.toDateString()),
         win, fail,
         entriesFindWin,
+        userIdent,
         newEntry,
         entryQuery, entrySort;
 
@@ -239,7 +239,6 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
         date       : dayDate,
         user       : entry.user_id    || this.user.user.name,
         user_id    : entry.user       || this.user.user._id,
-        user_ident : entry.user_ident || crypto.createHash("md5").update(String(this.user.user.mail)).digest("hex"),
         prev       : entry.prev,
         next       : entry.next,
         obstacles  : entry.obstacles
