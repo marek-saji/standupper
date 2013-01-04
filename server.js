@@ -29,38 +29,13 @@
  */
 
 /**
- * default settings
- */
-var settings = {
-    IP       : '0.0.0.0', // all addresses
-    PORT     : 8000,
-    MONGOURL : 'standupper',
-    DEBUG    : 0
-};
-
-/**
- * Load settings
- *
- * Prefer environment variables over `settings`
- */
-(function () {
-    var idx;
-    for (idx in settings) {
-        if (settings.hasOwnProperty(idx)) {
-            settings[idx] = process.env[idx] || settings[idx];
-        }
-    }
-}());
-
-
-/**
  * Modules
  */
 var http   = require("http"),
     // serving static files
     send   = require("send"),
     // mongo db
-    db     = require("mongojs").connect(settings.DBNAME, ["users", "entries"]),
+    db     = require("mongojs").connect(process.env.npm_package_config_mongourl, ["users", "entries"]),
     // cryptography (sed to calculate MD5 hashes)
     crypto = require("crypto"),
     // neat wrapper to socket.io
@@ -95,8 +70,15 @@ var server = http.createServer(function (req, res) {
         .root(__dirname + '/static/')
         .pipe(res);
 });
-server.listen(settings.PORT, settings.IP);
-console.log("Running on http://%s:%s", settings.IP, settings.PORT);
+server.listen(
+    process.env.npm_package_config_port,
+    process.env.npm_package_config_ip
+);
+console.log(
+    "Running on http://%s:%s",
+    process.env.npm_package_config_ip,
+    process.env.npm_package_config_port
+);
 
 
 /**
@@ -104,7 +86,7 @@ console.log("Running on http://%s:%s", settings.IP, settings.PORT);
  */
 now.on("connect", function () {
     console.log("Connected:", this.user.clientId);
-    this.now.debug = !! settings.DEBUG;
+    this.now.debug = !! process.env.npm_package_config_debug;
 });
 
 /**
@@ -275,13 +257,13 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
  * @param {function} no  Called when debug is not active.
  */
 everyone.now.gotDebug = function (yes, no) {
-    var callback = (settings.DEBUG ? yes : no);
+    var callback = (process.env.npm_package_config_debug ? yes : no);
     if (typeof callback === "function") {
         callback();
     }
 };
 
-if (settings.DEBUG) {
+if (process.env.npm_package_config_debug) {
     /**
      * Remove everything from the database and request client reset.
      */

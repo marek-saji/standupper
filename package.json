@@ -10,6 +10,13 @@
     ],
     "license": "MIT",
 
+    "config": {
+        "ip": "127.0.0.1",
+        "port": "8001",
+        "mongourl": "standupper",
+        "debug": 0
+    },
+
     "preferGlobal" : false,
 
     "bin": {
