@@ -11,10 +11,13 @@ window.UI = (function (document, window, undefined) {
         setTitle,
         drawDay,
         _drawDay,
+        _buildUserEntries,
         _drawUserEntries,
+        _addUser,
         _drawSubentries,
         _onEntryChange,
         _onDateChange,
+        _compareEntriesByUser,
         _setDate,
         _getDate;
 
@@ -75,12 +78,44 @@ window.UI = (function (document, window, undefined) {
     /**
      * Draw user entries
      *
-     * @param {string} user_id
      * @param {Object} entry
      */
-    drawEntry = function (user_id, entry) {
-        var list = document.querySelector("#user-" + user_id + " .subentries");
-        _drawSubentries(list, entry);
+    drawEntry = function (entry) {
+        var list = document.querySelector("#user-" + entry.user_id + " .subentries");
+        if (null === list) {
+            _addUser(entry);
+        }
+        else {
+            _drawSubentries(list, entry);
+        }
+    };
+
+
+    /**
+     * Add new user to page
+     *
+     * @param {Object} entry
+     */
+    _addUser = function (entry) {
+        var newHtmlEntry = _buildUserEntries(entry),
+            inserted = false,
+            context,
+            existingHtmlEntries,
+            i;
+
+        context = document.getElementById("contents");
+        existingHtmlEntries = context.children;
+        for (i=0 ; i < existingHtmlEntries.length ; i++) {
+            if (_compareEntriesByUser(existingHtmlEntries[i], newHtmlEntry)) {
+                context.insertBefore(newHtmlEntry, existingHtmlEntries[i]);
+                inserted = true;
+            }
+        }
+        if (false === inserted) {
+            context.appendChild(newHtmlEntry);
+        }
+
+        console.log(newHtmlEntry);
     };
 
 
@@ -123,13 +158,14 @@ window.UI = (function (document, window, undefined) {
      *
      * @param {Object} entry
      */
-    _drawUserEntries = function (entry) {
+    _buildUserEntries = function (entry) {
         var userSection = document.createElement("section"),
             header = document.createElement("h2"),
             avatar = document.createElement("img"),
             list = document.createElement('ol');
 
         userSection.id = "user-" + entry.user_id;
+        userSection.dataset.user_id = entry.user_id;
         userSection.dataset.date = entry.date;
         userSection.classList.add("entry");
 
@@ -145,7 +181,17 @@ window.UI = (function (document, window, undefined) {
         _drawSubentries(list, entry);
         userSection.appendChild(list);
 
-        document.getElementById("contents").appendChild(userSection);
+        return userSection;
+    };
+
+
+    /**
+     * Draw all user's entries in a day
+     *
+     * @param {Object} entry
+     */
+    _drawUserEntries = function (entry) {
+        document.getElementById("contents").appendChild(_buildUserEntries(entry));
     };
 
 
@@ -173,9 +219,6 @@ window.UI = (function (document, window, undefined) {
         isMyEntry = function (entry) {
             return me._id === entry.user_id;
         };
-        compareEntriesByUser = function (entryA, entryB) {
-            return entryA.user_id > entryB.user_id;
-        };
         if (false === dayEntries.some(isMyEntry))
         {
             dayEntries.push({
@@ -184,7 +227,7 @@ window.UI = (function (document, window, undefined) {
                 date    : _getDate()
             });
         }
-        dayEntries = dayEntries.sort(compareEntriesByUser);
+        dayEntries = dayEntries.sort(_compareEntriesByUser);
         document.getElementById("contents").innerHTML = "";
         dayEntries.forEach(_drawUserEntries);
     };
@@ -236,6 +279,27 @@ window.UI = (function (document, window, undefined) {
      */
     _onDateChange = function (e) {
         drawDay(_getDate());
+    };
+
+
+    /**
+     * Compare two entries by their user.
+     *
+     * Used for sorting.
+     *
+     * @param {Object|HTMLElement} entryA
+     * @param {Object|HTMLElement} entryB
+     *
+     * @returns {boolean} `true`, if first entry is greater.
+     */
+    _compareEntriesByUser = function (entryA, entryB) {
+        if (entryA instanceof HTMLElement) {
+            entryA = entryA.dataset;
+        }
+        if (entryB instanceof HTMLElement) {
+            entryB = entryB.dataset;
+        }
+        return entryA.user_id > entryB.user_id;
     };
 
 

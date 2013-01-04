@@ -16,14 +16,14 @@
  * [✓] register as existing or new user
  * [✓] get all entries for a day
  * [✓] update user's entry for a day
- * [ ] distribute new user in a day
+ * [✓] distribute new user in a day
  *
  * ### client
  *
  * [✓] export methods
  * [✓] initialize
  * [✓] save+redraw one user's entry
- * [ ] new users
+ * [✓] new users
  * [ ] no auto-adding self to the stand
  * [ ] navigating through days (input[type=date])
  */
@@ -229,7 +229,7 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
         entryQuery, entrySort;
 
     win = function () {
-        everyone.exclude([this.user.clientId]).now.drawEntry(this.user.user._id, newEntry);
+        everyone.exclude([this.user.clientId]).now.drawEntry(newEntry);
         success(newEntry);
     }.bind(this);
 
