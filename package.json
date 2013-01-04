@@ -1,0 +1,34 @@
+{
+    "name"         : "standupper",
+    "version"      : "0.0.1",
+    "author": "HolonGlobe http://holonglobe.com",
+    "description": "A simple tool for conducting scrumm standup meetings online.",
+    "contributors" : [
+        {
+            "name": "Marek Augustynowicz"
+        }
+    ],
+    "license": "MIT",
+
+    "preferGlobal" : false,
+
+    "bin": {
+        "standupper": "./server.js"
+    },
+    "scripts": {
+        "start": "node ./server.js"
+    },
+
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HolonGlobe/standupper"
+    },
+
+    "dependencies": {
+        "mongojs": "~0.4.6",
+        "now": "~0.8.1",
+        "send": "~0.1.0"
+    },
+    "devDependencies": {
+    }
+}
