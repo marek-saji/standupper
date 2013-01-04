@@ -1,10 +1,14 @@
+/**
+ * User interface
+ */
 window.UI = (function (document, window, undefined) {
     "use strict";
 
     // methods
     var fatalError,
-        redrawEntry,
+        drawEntry,
         init,
+        setTitle,
         drawDay,
         _drawDay,
         _drawUserEntries,
@@ -15,7 +19,8 @@ window.UI = (function (document, window, undefined) {
         _getDate;
 
     // properties
-    var _dayChooser;
+    var _dayChooser,
+        _title;
 
     // constants
     // sub-entries of a stand entry. `class : title`
@@ -31,25 +36,60 @@ window.UI = (function (document, window, undefined) {
 
 
 
+    /**
+     * Fatal error making further work impossible.
+     */
     fatalError = function () {
-        console.error(arguments);
+        console.error.apply(console, arguments);
+        console.trace();
         // TODO better message
         window.alert('get the hell out and die');
     };
 
 
+    /**
+     * Initialize user interface
+     */
     init = function () {
+        if (undefined === _title) {
+            _title = document.title;
+        }
+
         _dayChooser = document.getElementById('dayChooser');
         _dayChooser.addEventListener("input", _onDateChange, false);
 
         drawDay(new Date());
     };
 
-    redrawEntry = function (user_id, entry) {
+
+    /**
+     * Set page title
+     *
+     * @param {string} title
+     */
+    setTitle = function (title) {
+        document.title = title + ' ☆ ' + _title;
+    };
+
+
+    /**
+     * Draw user entries
+     *
+     * @param {string} user_id
+     * @param {Object} entry
+     */
+    drawEntry = function (user_id, entry) {
         var list = document.querySelector("#user-" + user_id + " .subentries");
         _drawSubentries(list, entry);
     };
 
+
+    /**
+     * Draw subentries in a list
+     *
+     * @param {HTMLElement} list
+     * @param {Object} entry
+     */
     _drawSubentries = function (list, entry) {
         var me = client.getUser(),
             ident, // sub-entry ident
@@ -77,6 +117,12 @@ window.UI = (function (document, window, undefined) {
         }
     };
 
+
+    /**
+     * Draw all user's entries in a day
+     *
+     * @param {Object} entry
+     */
     _drawUserEntries = function (entry) {
         var userSection = document.createElement("section"),
             header = document.createElement("h2"),
@@ -111,11 +157,24 @@ window.UI = (function (document, window, undefined) {
         document.getElementById("contents").appendChild(userSection);
     };
 
+
+    /**
+     * Fetch and display given day
+     *
+     * @param {Date|string} date
+     */
     drawDay = function (date) {
         _setDate(date);
+        setTitle(_getDate());
         now.initializeDay(date, _drawDay, fatalError);
     };
 
+
+    /**
+     * Draw a day
+     *
+     * @param {Object} dayEntries User's entries.
+     */
     _drawDay = function (dayEntries) {
         var me = client.getUser(),
             isMyEntry,
@@ -140,7 +199,13 @@ window.UI = (function (document, window, undefined) {
     };
 
 
-    // TODO don't loose changes, when leaving page
+    /**
+     * Event called, when entry is being changed
+     *
+     * @todo Don't loose changes, when leaving page.
+     *
+     * @param {Event} e
+     */
     _onEntryChange = function (e) {
         var target = e.target;
         if (this.dataset.sendDataTimeout) {
@@ -171,31 +236,51 @@ window.UI = (function (document, window, undefined) {
     };
 
 
+    /**
+     * Event called, when date is being changed.
+     *
+     * @todo Don't redraw, when date did not change.
+     *
+     * @param {Event} e
+     */
     _onDateChange = function (e) {
-        // TODO only if different than current date
         drawDay(_getDate());
     };
 
 
-
+    /**
+     * Get currently displayed date.
+     *
+     * @returns {String}
+     */
     _getDate = function () {
         return _dayChooser.value;
     };
+
+
+    /**
+     * Set currently displayed date.
+     *
+     * @param {String} date
+     */
     _setDate = function (date) {
         // TODO better way?
-        var y, m, d;
+        var y, m, d, dateF;
         date = new Date(date);
         y = date.getFullYear();
         m = date.getMonth() + 1;
         d = date.getDate();
-        _dayChooser.value = y + "-" + (m<10?"0":"") + m + "-" + (d<10?"0":"") + d;
+        dateF = y + "-" + (m<10?"0":"") + m + "-" + (d<10?"0":"") + d;
+        _dayChooser.value = dateF;
     };
 
 
+    // expose public methods
     return {
         init : init,
-        redrawEntry : redrawEntry,
+        drawEntry : drawEntry,
         drawDay: drawDay,
-        fatalError : fatalError
+        fatalError : fatalError,
+        setTitle : setTitle
     };
 }(document, window));
