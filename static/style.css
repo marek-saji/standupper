@@ -1,16 +1,34 @@
+* { box-sizing: border-box; }
+
 html
 {
     font-family : sans-serif;
 }
 
+#head
+{
+    float: left;
+}
+
 #head h1
 {
-    margin-bottom: 0;
+    margin: 0;
 }
 
 #dayChooser
 {
+    float: right;
     font-size: 1.1em;
+}
+
+#contents
+{
+    clear: both;
+}
+
+.entry h2
+{
+    margin: 0;
 }
 
 .entry .subentries
@@ -30,7 +48,8 @@ html
 {
     width: 100%;
     max-width: 100%;
-    height: 4em; /* TODO autoexpandable */
+    min-height: 4em;
+    padding: 0.5em;
     border: #ccc solid thin;
     font-family: inherit;
     font-size: inherit;
