@@ -29,6 +29,7 @@ html
 .entry h2
 {
     margin: 0;
+    clear: both;
 }
 
 .entry .subentries
@@ -53,4 +54,31 @@ html
     border: #ccc solid thin;
     font-family: inherit;
     font-size: inherit;
+}
+
+
+#foot
+{
+    margin-top: 1em;
+    font-size: 0.8em;
+    clear: both;
+}
+#foot p
+{
+    margin: 0;
+}
+
+/* display subentries beside each other on wide screens */
+@media all and (min-width: 84em)
+{
+    .entry .subentries > li
+    {
+        float: left;
+        width: 25%;
+        padding-left: .5em;
+    }
+    .entry .subentries > li:first-child
+    {
+        padding-left: 0;
+    }
 }
