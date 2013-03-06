@@ -41,6 +41,7 @@ var http   = require("http"),
     // neat wrapper to socket.io
     now    = require("now");
 
+var entryFields = JSON.parse(process.env.npm_package_config_entryFields);
 
 /**
  * Wrapper to split mongojs's single callback into two.
@@ -105,11 +106,15 @@ var everyone = now.initialize(server);
  * everyone.now scope is shared with client
  */
 
+
 /**
  * Register new user or auth existing one
  *
  * @param {string} userName
- * @param {function} success
+ * @param {function} success Will pass:
+ *        - {Object} user
+ *        - {boolean} returning Whether user is a new one or returning.
+ *        - {Object} entryFields
  * @param {function} failure
  */
 everyone.now.register = function (userName, success, failure) {
@@ -122,10 +127,10 @@ everyone.now.register = function (userName, success, failure) {
         name : userName
     };
 
-    win = function (user) {
+    win = function (returning, user) {
         this.user.registered = true;
         this.user.user = user;
-        success.apply(this, arguments);
+        success.call(this, user, returning, entryFields);
     }.bind(this);
 
     fail = function () {
@@ -147,10 +152,10 @@ everyone.now.register = function (userName, success, failure) {
         if (1 === foundUsers.length) {
             // got single user from db
             console.log('Returning user: ', foundUsers[0]);
-            win(foundUsers[0]);
+            win(true, foundUsers[0], entryFields);
         } else if (0 === foundUsers.length) {
             // no hits — add new user
-            createNewUser(userName, win, fail);
+            createNewUser(userName, win.bind(this, false), fail);
         } else {
             // more than one hit — something's wrong
             console.error('Got more than one user with name', userName);
@@ -193,10 +198,7 @@ everyone.now.initializeDay = function (date, success, failure) {
  *
  * @param {Date|string} date
  * @param {Object} entry
- *        Must contain:
- *        - {string} entry.prev
- *        - {string} entry.next
- *        - {string} entry.obstacles
+ *        Should contain all fields definied in config entryFields.
  *        May contain:
  *        - {string} entry.user_id Defaults to current `user.name`.
  *        - {string} entry.user_ Defaults to current `user._id`.
@@ -205,6 +207,7 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
     date = new Date(date); // may be a Date or string
     var dayDate = new Date(date.toDateString()),
         win, fail,
+        field,
         entriesFindWin,
         userIdent,
         newEntry,
@@ -219,12 +222,14 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
 
     newEntry = {
         date       : dayDate,
-        user       : entry.user_id    || this.user.user.name,
-        user_id    : entry.user       || this.user.user._id,
-        prev       : entry.prev,
-        next       : entry.next,
-        obstacles  : entry.obstacles
+        user       : entry.user_id || this.user.user.name,
+        user_id    : entry.user    || this.user.user._id
     };
+    for (field in entryFields) {
+        if (entryFields.hasOwnProperty(field)) {
+            newEntry[field] = entry[field];
+        }
+    }
 
     entryQuery = {
         date    : dayDate,

@@ -154,8 +154,10 @@ window.client = (function (window, document, undefined) {
      *
      * @param {Object} user
      * @param {boolean} returning Whether user is a new one or returning.
+     * @param {Object} entryFields Fields to show on entries.
+     *        `{ident : Label, ...}`
      */
-    _registered = function (user, returning) {
+    _registered = function (user, returning, entryFields) {
         if (returning) {
             console.log('Welcome back,', user);
         } else {
@@ -163,7 +165,7 @@ window.client = (function (window, document, undefined) {
         }
         storeUser(user);
 
-        UI.init();
+        UI.init(entryFields);
     };
 
 

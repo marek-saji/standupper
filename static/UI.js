@@ -23,15 +23,10 @@ window.UI = (function (document, window, undefined) {
 
     // properties
     var _dayChooser,
-        _title;
+        _title,
+        _entryFields;
 
     // constants
-    // sub-entries of a stand entry. `class : title`
-    var _ENTRYSUBS = {
-        prev      : "Previously",
-        next      : "Nextly",
-        obstacles : "Obstacles"
-    };
     // Responsiveness for network operations.
     var _RESPONSIVENESS = 200;
     // Size of avatar (in px), may be scaled in CSS
@@ -52,11 +47,16 @@ window.UI = (function (document, window, undefined) {
 
     /**
      * Initialize user interface
+     *
+     * @param {Object} entryFields Fields to show on entries.
+     *        `{ident : Label, ...}`
      */
-    init = function () {
+    init = function (entryFields) {
         if (undefined === _title) {
             _title = document.title;
         }
+
+        _entryFields = entryFields;
 
         _dayChooser = document.getElementById('dayChooser');
         _dayChooser.addEventListener("input", _onDateChange, false);
@@ -132,10 +132,10 @@ window.UI = (function (document, window, undefined) {
             text;
 
         list.innerHTML = "";
-        for (ident in _ENTRYSUBS) {
-            if (_ENTRYSUBS.hasOwnProperty(ident)) {
+        for (ident in _entryFields) {
+            if (_entryFields.hasOwnProperty(ident)) {
                 listItem = document.createElement("li");
-                listItem.appendChild(document.createTextNode(_ENTRYSUBS[ident]));
+                listItem.appendChild(document.createTextNode(_entryFields[ident]));
                 listItem.classList.add(ident);
 
                 text = document.createElement("textarea");
@@ -249,14 +249,16 @@ window.UI = (function (document, window, undefined) {
             function () {
                 var userId = target.dataset.user_id,
                     context = document.getElementById("user-" + userId),
-                    entry;
+                    entry,
+                    field;
 
                 // TODO use proper user
-                entry = {
-                    prev      : context.querySelector(".prev textarea").value,
-                    next      : context.querySelector(".next textarea").value,
-                    obstacles : context.querySelector(".obstacles textarea").value
-                };
+                entry = {};
+                for (field in _entryFields) {
+                    if (_entryFields.hasOwnProperty(field)) {
+                        entry[field] = context.querySelector("." + field + " textarea").innerHTML;
+                    }
+                }
 
                 now.storeEntry(
                     context.dataset.date,
