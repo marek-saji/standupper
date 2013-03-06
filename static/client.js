@@ -27,6 +27,7 @@ window.client = (function (window, document, undefined) {
      */
     _isCoolEnough = function () {
         var inputElement = document.createElement("input"),
+            divElement = document.createElement("div"),
             isCool;
 
         isCool = (
@@ -46,11 +47,13 @@ window.client = (function (window, document, undefined) {
             ||
             typeof JSON.parse !== "function"
             ||
-            typeof inputElement.dataset !== "object"
+            divElement.contentEditable === undefined
             ||
-            typeof inputElement.classList !== "object"
+            typeof divElement.dataset !== "object"
             ||
-            typeof inputElement.oninput === undefined
+            typeof divElement.classList !== "object"
+            ||
+            inputElement.oninput === undefined
             ||
             typeof inputElement.addEventListener !== "function"
             ||

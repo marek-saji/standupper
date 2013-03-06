@@ -26,7 +26,7 @@ html
     vertical-align: middle;
     padding-right: 0.5em;
 }
-.entry .subentries textarea
+.entry .subentries .subentry
 {
     width: 100%;
     max-width: 100%;

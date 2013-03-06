@@ -138,11 +138,12 @@ window.UI = (function (document, window, undefined) {
                 listItem.appendChild(document.createTextNode(_entryFields[ident]));
                 listItem.classList.add(ident);
 
-                text = document.createElement("textarea");
+                text = document.createElement("div");
+                text.classList.add("subentry");
                 text.dataset.user_id = entry.user_id;
-                text.value = entry[ident] || "";
-                if (entry.user_id !== me._id) {
-                    text.readOnly = true;
+                text.innerHTML = entry[ident] || "";
+                if (entry.user_id === me._id) {
+                    text.contentEditable = true;
                 }
                 listItem.appendChild(text);
                 text.addEventListener("input", _onEntryChange, false);
@@ -256,7 +257,7 @@ window.UI = (function (document, window, undefined) {
                 entry = {};
                 for (field in _entryFields) {
                     if (_entryFields.hasOwnProperty(field)) {
-                        entry[field] = context.querySelector("." + field + " textarea").innerHTML;
+                        entry[field] = context.querySelector("." + field + " .subentry").innerHTML;
                     }
                 }
 
