@@ -128,14 +128,19 @@ window.UI = (function (document, window, undefined) {
     _drawSubentries = function (list, entry) {
         var me = client.getUser(),
             ident, // sub-entry ident
+            fieldLabel,
             listItem,
             text;
 
         list.innerHTML = "";
         for (ident in _entryFields) {
             if (_entryFields.hasOwnProperty(ident)) {
+                fieldLabel = document.createElement("h3");
+                fieldLabel.classList.add("label");
+                fieldLabel.textContent = _entryFields[ident];
+
                 listItem = document.createElement("li");
-                listItem.appendChild(document.createTextNode(_entryFields[ident]));
+                listItem.appendChild(fieldLabel);
                 listItem.classList.add(ident);
 
                 text = document.createElement("div");
