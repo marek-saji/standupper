@@ -1,8 +1,10 @@
 * { box-sizing: border-box; }
 
-html
+body
 {
     font-family : sans-serif;
+    margin: 0;
+    padding: 0.5em 1em 0;
 }
 
 #head
@@ -10,15 +12,18 @@ html
     float: left;
 }
 
-#head h1
+#head h1,
+#head p
 {
     margin: 0;
+    margin: 0;
+    line-height: 1em;
 }
 
 #dayChooser
 {
     float: right;
-    font-size: 1.1em;
+    font-size: 1.5em;
 }
 
 #contents
@@ -51,7 +56,7 @@ html
     display: inline;
     position: relative;
     background-color: white;
-    margin: 0 0 0 0.25em;;
+    margin: 0 0 0 -0.25em;;
     padding: 0 0.25em;
     font-weight: normal;
     font-size: 1em;
@@ -60,10 +65,13 @@ html
 .entry .subentries .subentry
 {
     width: 100%;
-    max-width: 100%;
-    min-height: 4em;
+    width: -webkit-calc(100% + 1em);
+    width: -moz-calc(100% + 1em);
+    width: -ms-calc(100% + 1em);
+    width: calc(100% + 1em);
+    min-height: 2em;
     padding: 0.75em 0.5em 0.5em;
-    margin: -0.6em 0 1em;
+    margin: -0.6em -0.5em 1em;
     border: #ccc solid thin;
     font-family: inherit;
     font-size: inherit;
@@ -76,6 +84,9 @@ html
     margin-top: 1em;
     font-size: 0.8em;
     clear: both;
+    margin: 0 -1.25em;
+    padding: 1em 1.25em;
+    background-color: #eee;
 }
 #foot p
 {
@@ -89,7 +100,7 @@ html
     {
         float: left;
         width: 25%;
-        padding-left: .5em;
+        padding-left: 1.5em;
     }
     .entry .subentries > li:first-child
     {
