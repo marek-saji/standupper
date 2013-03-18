@@ -208,7 +208,7 @@ window.UI = (function (document, window, undefined) {
      */
     drawDay = function (date) {
         _setDate(date);
-        setTitle(_getDate());
+        setTitle(_getDate().toLocaleDateString());
         now.initializeDay(date, _drawDay, fatalError);
     };
 
@@ -317,7 +317,7 @@ window.UI = (function (document, window, undefined) {
      * @returns {String}
      */
     _getDate = function () {
-        return _dayChooser.value;
+        return _dayChooser.valueAsDate;
     };
 
 
@@ -327,14 +327,8 @@ window.UI = (function (document, window, undefined) {
      * @param {String} date
      */
     _setDate = function (date) {
-        // TODO better way?
-        var y, m, d, dateF;
         date = new Date(date);
-        y = date.getFullYear();
-        m = date.getMonth() + 1;
-        d = date.getDate();
-        dateF = y + "-" + (m<10?"0":"") + m + "-" + (d<10?"0":"") + d;
-        _dayChooser.value = dateF;
+        _dayChooser.valueAsDate = date;
     };
 
 
