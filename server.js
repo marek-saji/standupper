@@ -67,6 +67,7 @@ var dbResponse = function dbResponse (success, failure) {
  * Create HTTP server for serving static content.
  */
 var server = http.createServer(function (req, res) {
+    console.log('Requested', req.url);
     send(req, req.url)
         .root(__dirname + '/static/')
         .pipe(res);
