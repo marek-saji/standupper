@@ -12,6 +12,14 @@ body
     float: left;
 }
 
+#head object,
+#head img
+{
+    width: 1em;
+    height: 1em;
+    vertical-align: top;
+}
+
 #head h1,
 #head p
 {

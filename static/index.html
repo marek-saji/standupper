@@ -4,6 +4,14 @@
 
     <title>StandUpper</title>
 
+    <!-- favicons -->
+    <link rel="shortcut icon"
+          type="image/png" href="/img/logo-96.png" />
+    <link rel="apple-touch-icon"
+          type="image/png" href="/img/logo-144.png" />
+    <meta name="msapplication-TileImage" content="/img/logo-144.png">
+    <meta name="msapplication-TileColor" content="#ef0303">
+
     <script src="/nowjs/now.js"></script>
     <script src="prefixfree.js"></script>
     <script src="storage.js"></script>
@@ -19,7 +27,23 @@
 <body>
 
     <header id=head>
-        <h1>StandUpper</h1>
+        <h1>
+            <object
+                width=48 height=48
+                class="img"
+                type=image/svg+xml
+                data="/img/logo.svg"
+            >
+                <img
+                    width=48 height=48
+                    alt=alt
+                    title=title
+                    id="test"
+                    src="/img/logo-96.png"
+                >
+            </object>
+            StandUpper
+        </h1>
         <p>
             <small>Conduct scrumm stand–up meetings online</small>
         </p>
@@ -43,6 +67,12 @@
             </p>
             <p>
                 <a href="https://github.com/HolonGlobe/standupper">source code on GitHub</a>
+            </p>
+            <p>
+                <a href="http://icomoon.io/#icons"
+                   title="Icons from IcoMoon Pack">Icons</a>
+                licensed under
+                <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
             </p>
         </small>
     </footer>
