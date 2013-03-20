@@ -101,13 +101,32 @@ body
     margin: 0;
 }
 
-/* display subentries beside each other on wide screens */
-@media all and (min-width: 84em)
+/* display subentries in two columns */
+@media all and (min-width: 42em)
 {
     .entry .subentries > li
     {
         float: left;
+        width: 50%;
+        padding-left: 1.5em;
+    }
+    .entry .subentries > li:nth-child(2n+1)
+    {
+        clear: left;
+        padding-left: 0;
+    }
+}
+
+/* display subentries in four columns */
+@media all and (min-width: 84em)
+{
+    .entry .subentries > li
+    {
         width: 25%;
+    }
+    .entry .subentries > li:nth-child(2n+1)
+    {
+        clear: none;
         padding-left: 1.5em;
     }
     .entry .subentries > li:first-child
