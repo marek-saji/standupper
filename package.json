@@ -15,7 +15,7 @@
         "port": "8001",
         "mongourl": "standupper",
         "debug": 0,
-        "entryFields" : "{\"prev\":\"Previously\",\"next\":\"Nextly\",\"status\":\"Stories status\",\"obstacles\":\"Obstacles\"}"
+        "entryFields" : "{\"prev\":\"Previously\",\"next\":\"Nextly\",\"obstacles\":\"Obstacles\"}"
     },
 
     "preferGlobal" : false,
