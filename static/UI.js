@@ -128,6 +128,8 @@ window.UI = (function (document, window, undefined) {
     _drawSubentries = function (list, entry) {
         var me = client.getUser(),
             ident, // sub-entry ident
+            count = 0,
+            i,
             fieldLabel,
             listItem,
             text;
@@ -135,6 +137,8 @@ window.UI = (function (document, window, undefined) {
         list.innerHTML = "";
         for (ident in _entryFields) {
             if (_entryFields.hasOwnProperty(ident)) {
+                count++;
+
                 fieldLabel = document.createElement("h3");
                 fieldLabel.classList.add("label");
                 fieldLabel.textContent = _entryFields[ident];
@@ -154,6 +158,12 @@ window.UI = (function (document, window, undefined) {
                 text.addEventListener("input", _onEntryChange, false);
 
                 list.appendChild(listItem);
+            }
+        }
+
+        for (i = 2; i<=4; i++) {
+            if (0 === count%i) {
+                list.classList.add('items-' + i + 'n');
             }
         }
     };

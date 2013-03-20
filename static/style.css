@@ -101,35 +101,50 @@ body
     margin: 0;
 }
 
-/* display subentries in two columns */
+/* room for two columns */
 @media all and (min-width: 42em)
 {
-    .entry .subentries > li
+    .subentries.items-2n > li
     {
         float: left;
         width: 50%;
         padding-left: 1.5em;
     }
-    .entry .subentries > li:nth-child(2n+1)
+    .subentries.items-2n > li:nth-child(2n+1)
     {
         clear: left;
         padding-left: 0;
     }
 }
 
-/* display subentries in four columns */
+/* room for three columns */
+@media all and (min-width: 63em)
+{
+    .subentries.items-3n > li
+    {
+        float: left;
+        width: 33.333%;
+        padding-left: 1.5em;
+    }
+    .subentries.items-3n > li:first-child
+    {
+        padding-left: 0;
+    }
+}
+
+/* room for four columns */
 @media all and (min-width: 84em)
 {
-    .entry .subentries > li
+    .subentries.items-4n > li
     {
         width: 25%;
     }
-    .entry .subentries > li:nth-child(2n+1)
+    .subentries.items-4n > li:nth-child(2n+1)
     {
         clear: none;
         padding-left: 1.5em;
     }
-    .entry .subentries > li:first-child
+    .subentriess.items-4n > li:first-child
     {
         padding-left: 0;
     }
