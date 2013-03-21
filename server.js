@@ -31,17 +31,20 @@
 /**
  * Modules
  */
-var http   = require("http"),
+var // configuration
+    config = require("./lib/configuration.js"),
+    // HTTP server
+    http   = require("http"),
     // serving static files
     send   = require("send"),
     // mongo db
-    db     = require("mongojs").connect(process.env.npm_package_config_mongourl, ["users", "entries"]),
+    mongojs = require("mongojs"),
     // cryptography (sed to calculate MD5 hashes)
     crypto = require("crypto"),
     // neat wrapper to socket.io
     now    = require("now");
 
-var entryFields = JSON.parse(process.env.npm_package_config_entryFields);
+var db = mongojs.connect(config.get("mongo:url"), ["users", "entries"]);
 
 /**
  * Wrapper to split mongojs's single callback into two.
@@ -73,13 +76,13 @@ var server = http.createServer(function (req, res) {
         .pipe(res);
 });
 server.listen(
-    process.env.npm_package_config_port,
-    process.env.npm_package_config_ip
+    config.get("server:port"),
+    config.get("server:ip")
 );
 console.log(
     "Running on http://%s:%s",
-    process.env.npm_package_config_ip,
-    process.env.npm_package_config_port
+    config.get("server:ip"),
+    config.get("server:port")
 );
 
 
@@ -88,7 +91,7 @@ console.log(
  */
 now.on("connect", function () {
     console.log("Connected:", this.user.clientId);
-    this.now.debug = !! process.env.npm_package_config_debug;
+    this.now.debug = !! config.get("debug");
 });
 
 /**
@@ -131,7 +134,7 @@ everyone.now.register = function (userName, success, failure) {
     win = function (returning, user) {
         this.user.registered = true;
         this.user.user = user;
-        success.call(this, user, returning, entryFields);
+        success.call(this, user, returning, config.get("entryFields"));
     }.bind(this);
 
     fail = function () {
@@ -153,7 +156,7 @@ everyone.now.register = function (userName, success, failure) {
         if (1 === foundUsers.length) {
             // got single user from db
             console.log('Returning user: ', foundUsers[0]);
-            win(true, foundUsers[0], entryFields);
+            win(true, foundUsers[0], config.get("entryFields"));
         } else if (0 === foundUsers.length) {
             // no hits — add new user
             createNewUser(userName, win.bind(this, false), fail);
@@ -211,6 +214,7 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
         field,
         entriesFindWin,
         userIdent,
+        entryFields = config.get("entryFields"),
         newEntry,
         entryQuery, entrySort;
 
@@ -263,13 +267,13 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
  * @param {function} no  Called when debug is not active.
  */
 everyone.now.gotDebug = function (yes, no) {
-    var callback = (process.env.npm_package_config_debug ? yes : no);
+    var callback = (config.get("debug") ? yes : no);
     if (typeof callback === "function") {
         callback();
     }
 };
 
-if (process.env.npm_package_config_debug) {
+if (config.get("debug")) {
     /**
      * Remove everything from the database and request client reset.
      */

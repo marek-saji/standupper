@@ -10,14 +10,6 @@
     ],
     "license": "MIT",
 
-    "config": {
-        "ip": "127.0.0.1",
-        "port": "8001",
-        "mongourl": "standupper",
-        "debug": 0,
-        "entryFields" : "{\"prev\":\"Previously\",\"next\":\"Nextly\",\"obstacles\":\"Obstacles\"}"
-    },
-
     "preferGlobal" : false,
 
     "bin": {
@@ -35,7 +27,8 @@
     "dependencies": {
         "mongojs": "~0.4.6",
         "now": "~0.8.1",
-        "send": "~0.1.0"
+        "send": "~0.1.0",
+        "nconf": "~0.6.7"
     },
     "devDependencies": {
     }
