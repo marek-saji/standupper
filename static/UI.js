@@ -9,6 +9,7 @@ window.UI = (function (document, window, undefined) {
         drawEntry,
         init,
         setTitle,
+        parseText,
         drawDay,
         _drawDay,
         _buildUserEntries,
@@ -16,6 +17,9 @@ window.UI = (function (document, window, undefined) {
         _addUser,
         _drawSubentries,
         _onEntryChange,
+        _onEntryClick,
+        _onEntryFocus,
+        _onEntryBlur,
         _onDateChange,
         _compareEntriesByUser,
         _setDate,
@@ -24,6 +28,8 @@ window.UI = (function (document, window, undefined) {
     // properties
     var _dayChooser,
         _title,
+        // {Markdown.Converter}
+        _markdown,
         // Configuration sent by server
         _config;
 
@@ -62,6 +68,8 @@ window.UI = (function (document, window, undefined) {
 
         _config = config;
 
+        _markdown = new Markdown.Converter();
+
         _dayChooser = document.getElementById('dayChooser');
         _dayChooser.addEventListener("input", _onDateChange, false);
 
@@ -76,6 +84,30 @@ window.UI = (function (document, window, undefined) {
      */
     setTitle = function (title) {
         document.title = title + ' ☆ ' + _title;
+    };
+
+
+    /**
+     * Parse markdown text
+     *
+     * @param {String} Markdown
+     *
+     * @returns {String} HTML
+     */
+    parseText = function (markdown) {
+        var text, i;
+        markdown = markdown || "";
+        for (i in _config.textReplacements) {
+            if (_config.textReplacements.hasOwnProperty(i)) {
+                markdown = markdown.replace(
+                    new RegExp(_config.textReplacements[i].replace, "g"),
+                    _config.textReplacements[i]["with"]
+                );
+
+            }
+        }
+        text = _markdown.makeHtml(markdown);
+        return text .replace('/<a /g', '<a target=_blank ');
     };
 
 
@@ -154,12 +186,13 @@ window.UI = (function (document, window, undefined) {
                 text = document.createElement("div");
                 text.classList.add("subentry");
                 text.dataset.user_id = entry.user_id;
-                text.innerHTML = entry[ident] || "";
-                if (entry.user_id === me._id) {
-                    text.contentEditable = true;
-                }
+                text.dataset.rawText = entry[ident] || "";
+                text.innerHTML = parseText(entry[ident]);
                 listItem.appendChild(text);
                 text.addEventListener("input", _onEntryChange, false);
+                text.addEventListener("mousedown", _onEntryClick, false);
+                text.addEventListener("focus", _onEntryFocus, false);
+                text.addEventListener("blur", _onEntryBlur, false);
 
                 list.appendChild(listItem);
             }
@@ -276,7 +309,7 @@ window.UI = (function (document, window, undefined) {
                 entry = {};
                 for (field in _config.entryFields) {
                     if (_config.entryFields.hasOwnProperty(field)) {
-                        entry[field] = context.querySelector("." + field + " .subentry").innerHTML;
+                        entry[field] = context.querySelector("." + field + " .subentry").innerText;
                     }
                 }
 
@@ -289,6 +322,43 @@ window.UI = (function (document, window, undefined) {
             },
             _RESPONSIVENESS
         );
+    };
+
+
+    /**
+     * Event called, when entry is being clicked
+     *
+     * @param {Event} e
+     */
+    _onEntryClick = function (e) {
+        var target = e.target;
+        if ("a" !== target.tagName.toLowerCase()) {
+            this.contentEditable = true;
+        }
+    };
+
+
+    /**
+     * Event called, when entry is being focused
+     *
+     * @param {Event} e
+     */
+    _onEntryFocus = function (e) {
+        var target = e.target;
+        target.innerText = target.dataset.rawText;
+    };
+
+
+    /**
+     * Event called, when entry is being blured
+     *
+     * @param {Event} e
+     */
+    _onEntryBlur = function (e) {
+        var target = e.target;
+        this.contentEditable = false;
+        this.dataset.rawText = this.innerText.trimRight();
+        this.innerHTML = parseText(this.innerText);
     };
 
 
@@ -349,6 +419,7 @@ window.UI = (function (document, window, undefined) {
     // expose public methods
     return {
         init : init,
+        parseText : parseText,
         drawEntry : drawEntry,
         drawDay: drawDay,
         fatalError : fatalError,

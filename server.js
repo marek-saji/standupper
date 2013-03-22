@@ -70,9 +70,15 @@ var dbResponse = function dbResponse (success, failure) {
  * Create HTTP server for serving static content.
  */
 var server = http.createServer(function (req, res) {
+    var path;
     console.log('Requested', req.url);
+    if ("/Markdown.Converter.js" === req.url) {
+        path = '/node_modules/pagedown/';
+    } else {
+        path = '/static/';
+    }
     send(req, req.url)
-        .root(__dirname + '/static/')
+        .root(__dirname + path)
         .pipe(res);
 });
 server.listen(

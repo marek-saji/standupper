@@ -83,7 +83,35 @@ body
     border: #ccc solid thin;
     font-family: inherit;
     font-size: inherit;
+    /* user generated content! */
     overflow: auto;
+}
+
+.entry .subentries .subentry h1,
+.entry .subentries .subentry h2,
+.entry .subentries .subentry h3,
+.entry .subentries .subentry h4,
+.entry .subentries .subentry h5,
+.entry .subentries .subentry h6,
+.entry .subentries .subentry p,
+.entry .subentries .subentry ul,
+.entry .subentries .subentry ol,
+.entry .subentries .subentry blockquote
+{
+    margin: 0 0 1em 0;
+}
+.entry .subentries .subentry h1:last-child,
+.entry .subentries .subentry h2:last-child,
+.entry .subentries .subentry h3:last-child,
+.entry .subentries .subentry h4:last-child,
+.entry .subentries .subentry h5:last-child,
+.entry .subentries .subentry h6:last-child,
+.entry .subentries .subentry p:last-child,
+.entry .subentries .subentry ul:last-child,
+.entry .subentries .subentry ol:last-child,
+.entry .subentries .subentry blockquote:last-child
+{
+    margin: 0;
 }
 
 
