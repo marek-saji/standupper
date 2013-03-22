@@ -134,7 +134,7 @@ everyone.now.register = function (userName, success, failure) {
     win = function (returning, user) {
         this.user.registered = true;
         this.user.user = user;
-        success.call(this, user, returning, config.get("entryFields"));
+        success.call(this, user, returning, config.get("client"));
     }.bind(this);
 
     fail = function () {
@@ -156,7 +156,7 @@ everyone.now.register = function (userName, success, failure) {
         if (1 === foundUsers.length) {
             // got single user from db
             console.log('Returning user: ', foundUsers[0]);
-            win(true, foundUsers[0], config.get("entryFields"));
+            win(true, foundUsers[0], config.get("client"));
         } else if (0 === foundUsers.length) {
             // no hits — add new user
             createNewUser(userName, win.bind(this, false), fail);
@@ -214,7 +214,7 @@ everyone.now.storeEntry = function (date, entry, success, failure) {
         field,
         entriesFindWin,
         userIdent,
-        entryFields = config.get("entryFields"),
+        entryFields = config.get("client:entryFields"),
         newEntry,
         entryQuery, entrySort;
 

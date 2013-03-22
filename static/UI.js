@@ -24,7 +24,8 @@ window.UI = (function (document, window, undefined) {
     // properties
     var _dayChooser,
         _title,
-        _entryFields;
+        // Configuration sent by server
+        _config;
 
     // constants
     // Responsiveness for network operations.
@@ -48,15 +49,18 @@ window.UI = (function (document, window, undefined) {
     /**
      * Initialize user interface
      *
-     * @param {Object} entryFields Fields to show on entries.
-     *        `{ident : Label, ...}`
+     * @param {Object} config Including:
+     *        - {Object} entryFields Fields to show on entries.
+     *          `{ident : Label, ...}`.
+     *        - {Array} textReplacements Used by parser. Every item
+     *          is an {Object} with `replace` and `with` properties.
      */
-    init = function (entryFields) {
+    init = function (config) {
         if (undefined === _title) {
             _title = document.title;
         }
 
-        _entryFields = entryFields;
+        _config = config;
 
         _dayChooser = document.getElementById('dayChooser');
         _dayChooser.addEventListener("input", _onDateChange, false);
@@ -135,13 +139,13 @@ window.UI = (function (document, window, undefined) {
             text;
 
         list.innerHTML = "";
-        for (ident in _entryFields) {
-            if (_entryFields.hasOwnProperty(ident)) {
+        for (ident in _config.entryFields) {
+            if (_config.entryFields.hasOwnProperty(ident)) {
                 count++;
 
                 fieldLabel = document.createElement("h3");
                 fieldLabel.classList.add("label");
-                fieldLabel.textContent = _entryFields[ident];
+                fieldLabel.textContent = _config.entryFields[ident];
 
                 listItem = document.createElement("li");
                 listItem.appendChild(fieldLabel);
@@ -270,8 +274,8 @@ window.UI = (function (document, window, undefined) {
 
                 // TODO use proper user
                 entry = {};
-                for (field in _entryFields) {
-                    if (_entryFields.hasOwnProperty(field)) {
+                for (field in _config.entryFields) {
+                    if (_config.entryFields.hasOwnProperty(field)) {
                         entry[field] = context.querySelector("." + field + " .subentry").innerHTML;
                     }
                 }

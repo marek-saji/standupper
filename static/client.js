@@ -157,18 +157,18 @@ window.client = (function (window, document, undefined) {
      *
      * @param {Object} user
      * @param {boolean} returning Whether user is a new one or returning.
-     * @param {Object} entryFields Fields to show on entries.
-     *        `{ident : Label, ...}`
+     * @param {Object} config
      */
-    _registered = function (user, returning, entryFields) {
+    _registered = function (user, returning, config) {
         if (returning) {
             console.log('Welcome back,', user);
         } else {
             console.log('Welcome,', user);
         }
+        console.log("Got configuration:", config);
         storeUser(user);
 
-        UI.init(entryFields);
+        UI.init(config);
     };
 
 
