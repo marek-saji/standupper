@@ -33,6 +33,10 @@ body
     float: right;
     font-size: 1.5em;
 }
+#dayChooser::-webkit-clear-button
+{
+    -webkit-appearance: none;
+}
 
 #contents
 {
