@@ -1,0 +1,20 @@
+doctype 5
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width')
+    block title
+      title
+        =title
+        if title
+          | ☆
+        | StandUpper
+    block css
+      link(rel='stylesheet', href='/css/style.css')
+    script(src='http://localhost:35729/livereload.js')
+  body
+    header
+      h1 StandUpper
+    block content
+    block js
+      script(src='/js/script.js')

@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  each plan in plans  
+    form.plan(id=plan._id)
+      p= plan.date
+      fieldset
+        legend.i18n Previously
+        div(contenteditable, data-name='prev').planEntries
+          =plan.prev.join("\n")
+      fieldset
+        legend.i18n Nextly
+        div(contenteditable, data-name='next').planEntries
+          =plan.next.join("\n")
+      fieldset
+        legend.i18n Obstacles
+        div(contenteditable, data-name='obst').planEntries
+          =plan.obst.join("\n")

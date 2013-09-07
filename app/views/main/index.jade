@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  ul
+    each article in articles
+      li
+        h2= article.title
+        span= article.date
+        p= article.text
