@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-    User = require('./user');
+var mongoose = require('mongoose');
 
 var PlanSchema = new mongoose.Schema({
   user: {
@@ -10,6 +9,11 @@ var PlanSchema = new mongoose.Schema({
   prev: [String],
   next: [String],
   obst: [String]
+});
+
+PlanSchema.pre('save', function (next) {
+  //this.user = TODO;
+  next();
 });
 
 PlanSchema.virtual('date')

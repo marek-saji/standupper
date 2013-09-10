@@ -9,7 +9,26 @@ defaults = {
     host: '0.0.0.0',
     port: 3000
   },
-  db: 'mongodb://localhost/standupper'
+  db: 'mongodb://localhost/standupper',
+  // keys for authentication with Passport:
+  // set them in ./config.json
+  keys: {
+    github: {
+      // https://github.com/settings/applications/new
+      id:     '',
+      secret: ''
+    },
+    dropbox: {
+      // https://www.dropbox.com/developers/apps
+      id:     '',
+      secret: ''
+    },
+    facebook: {
+      // https://developers.facebook.com/apps/
+      id:     '',
+      secret: ''
+    }
+  }
 };
 
 

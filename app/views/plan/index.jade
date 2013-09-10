@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  each plan in plans
+    form.plan(id=plan._id)
+      p
+        | Plan for 
+        = plan.date.toDateString()
+      for title, name in {prev: 'Previously', next: 'Nextly', obst: 'Obstacles'}
+        fieldset
+          legend.i18n
+            = title
+          div(contenteditable, data-name=name).planEntries
+            = plan[name].join("\n")

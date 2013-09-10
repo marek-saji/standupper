@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  nav.auth
+    p.i18n Auth using:
+    ul
+      - var titles = {github: 'GitHub', twitter: 'Twitter', dropbox: 'Dropbox', google: 'Google', facebook: 'FaceBook'};
+      for name in strategies
+          if 'session' !== name
+            li
+              a.i18n(href='/auth/' + name, class=name)
+                = titles[ name ] || name
+    p.i18n
+      | Don't remember which one you used to sign-in last time?
+      | Doesn't matter. Use anything to access your account,
+      | as long you use the same e-mail.
