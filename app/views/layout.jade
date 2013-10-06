@@ -11,7 +11,8 @@ html(lang='en')
         | StandUpper
     block css
       link(rel='stylesheet', href='/css/style.css')
-    script(src='//localhost.dev:35729/livereload.js')
+    if config.server.livereload
+      script(src='//' + config.server.host + ':' + config.server.livereload.port + '/livereload.js')
   body
     header
       h1 StandUpper

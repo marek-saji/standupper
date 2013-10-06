@@ -1,7 +1,9 @@
-var request = require('request');
+var request = require('request'),
+    config  = require('./config/config');
+
 
 module.exports = function (grunt) {
-  var reloadPort = 35729,
+  var reloadPort = config.server.livereload.port,
       files;
 
   grunt.initConfig({
@@ -39,7 +41,7 @@ module.exports = function (grunt) {
   grunt.registerTask('delayed-livereload', 'Live reload after the node server has restarted.', function () {
     var done = this.async();
     setTimeout(function () {
-      request.get('http://localhost:' + reloadPort + '/changed?files=' + files.join(','),  function(err, res) {
+      request.get('http://' + config.server.host + ':' + reloadPort + '/changed?files=' + files.join(','),  function(err, res) {
           var reloaded = !err && res.statusCode === 200;
           if (reloaded)
             grunt.log.ok('Delayed live reload successful.');

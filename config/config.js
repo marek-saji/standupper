@@ -7,7 +7,10 @@ defaults = {
   root: rootPath,
   server: {
     host: '0.0.0.0',
-    port: 3000
+    port: 3000,
+    livereload: {
+      port: 35729
+    }
   },
   db: 'mongodb://localhost/standupper',
   // keys for authentication with Passport:

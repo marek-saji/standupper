@@ -1,11 +1,12 @@
-var Strategy = require('passport-google').Strategy,
-    Promise  = require('mongoose').Promise,
-    steps    = require('./steps');
+var Strategy  = require('passport-google').Strategy,
+    Promise   = require('mongoose').Promise,
+    steps     = require('./steps'),
+    serverCfg = require('../config').server;
 
 module.exports = new Strategy(
   {
-    returnURL: 'http://localhost:3000/auth/google/callback',
-    realm:     'http://localhost:3000/'
+    returnURL: 'http://' + serverCfg.host + ':' + serverCfg.port + '/auth/google/callback',
+    realm:     'http://' + serverCfg.host + ':' + serverCfg.port + '/'
   },
   function googleStrategyVerifier (identifier, profile, resolveVerification)
   {
