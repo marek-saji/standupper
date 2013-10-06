@@ -1,5 +1,7 @@
 /config.json
 
+.tern-port
+
 lib-cov
 *.seed
 *.log
