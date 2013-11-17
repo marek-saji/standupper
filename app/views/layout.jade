@@ -14,13 +14,16 @@ html(lang='en')
     if config.server.livereload
       script(src='//' + config.server.host + ':' + config.server.livereload.port + '/livereload.js')
   body
-    header
+    header#head
       h1 StandUpper
       if user
         div.user
           +User(user)
           |  
           a(href='/deauth') de-auth
-    block content
+    div#content
+      block content
+    footer#foot
+      block footer
     block js
       script(src='/js/script.js')

@@ -1,14 +1,26 @@
 extends ../layout
+include ../atomic/molecules
 
 block content
-  each plan in plans
-    form.plan(id=plan._id)
-      p
-        | Plan for 
-        = plan.date.toDateString()
-      for title, name in {prev: 'Previously', next: 'Nextly', obst: 'Obstacles'}
-        fieldset
-          legend.i18n
-            = title
-          div(contenteditable, data-name=name).planEntries
-            = plan[name].join("\n")
+  - var classNames, mine;
+  content.plans
+    for plan in plans
+      // if previous was mine
+      if mine
+        h2.i18n Others' plans
+      - classNames = [];
+      - mine = plan.user._id == user._id;
+      - if (mine) classNames.push('me');
+      - if (plan.draft) classNames.push('draft');
+      form.plan(class = classNames, id=plan._id)
+        h3
+          +User(plan.user)
+          label.draft-switch
+            input(type='checkbox',name='draft',checked=plan.draft,disabled=!mine)
+            span.i18n draft
+        for title, name in {prev: 'Previously', next: 'Nextly', obst: 'Obstacles'}
+          fieldset
+            legend.i18n
+              = title
+            div(contenteditable=mine, data-name=name).planEntries
+              = plan[name].join('\n')

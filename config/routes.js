@@ -5,9 +5,12 @@ module.exports = function (app, config) {
     return next();
   };
 
+  var Plan = require('mongoose').model('Plan');
+
   var requireAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
     {
+      res.locals.user = req.user;
       return next();
     }
     else
@@ -28,10 +31,15 @@ module.exports = function (app, config) {
     res.redirect('/plan');
   });
 
+  app.get('/plan', function (req, res) {
+    var date = req.query.date || Plan.dateToISODateString(new Date());
+    res.redirect('/plan/' + date);
+  });
+
   var plan = require('../app/controllers/plan');
   app
-    .get ('/plan', authorizedAccessOnly, plan.index)
-    .post('/plan', authorizedAccessOnly, plan.save);
+    .get ('/plan/:date', authorizedAccessOnly, plan.index)
+    .post('/plan/:date', authorizedAccessOnly, plan.save);
 
   // auth
   var auth = require('../app/controllers/auth');

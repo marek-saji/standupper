@@ -5,6 +5,7 @@ var PlanSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref:  'User'
   },
+  date: String,
   draft: { type: Boolean, default: true },
   prev: [String],
   next: [String],
@@ -12,19 +13,15 @@ var PlanSchema = new mongoose.Schema({
 });
 
 PlanSchema.pre('save', function (next) {
-  //this.user = TODO;
+  var originalDate = this.date;
+  this.date = PlanSchema.statics.dateToISODateString(this.date);
   next();
 });
 
-PlanSchema.virtual('date')
-  .get(function() {
-    var date = new Date(this._id.generationTime * 1000);
-    return new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDay()
-    );
-  });
+PlanSchema.statics.dateToISODateString =  function (date) {
+  date = date ? new Date(date) : new Date();
+  return date.toISOString().split('T')[0];
+};
 
 // TODO add index
 

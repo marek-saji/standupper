@@ -8,10 +8,76 @@ html
     box-sizing: border-box;
 }
 
+#head h1,
+#head .user
+{
+    display: inline;
+}
+
+#head .user
+{
+    float: right;
+    font-size: 0.8em;
+}
+#head .user .photo
+{
+    max-width:  1.5em;
+    max-height: 1.5em;
+}
+
+
+#content
+{
+    clear: both;
+}
+
+
+.plan
+{
+    padding-left: 5.25em;
+}
+
+.plan h3
+{
+    font-size: 1.5em;
+    color: #555;
+    font-weight: normal;
+    margin: 1em 0 0.5em -3.5em;
+}
+
+.plan h3 .hcard .photo
+{
+    vertical-align: top;
+    float: left;
+}
+.plan.me h3 .hcard .fn
+{
+  color: #5884AD;
+}
+
 .plan > fieldset
 {
     padding: 0;
     border: #aaa solid thin;
+    margin-top: 1em;
+    transition: background-color 0.2s ease-in;
+}
+.plan .draft-switch
+{
+  margin-left: 1em;
+}
+.plan:not(.me) .draft-switch input,
+.plan:not(.me):not(.draft) .draft-switch
+{
+  display: none;
+}
+.plan.draft > fieldset
+{
+  background-color: #fea;
+}
+.plan .draft-switch
+{
+  color: orange;
 }
 .plan > fieldset > legend
 {
@@ -19,6 +85,21 @@ html
     padding-left: 0.1em;
     font-size: 1em;
     color: #666;
+}
+
+@media all and (min-width: 80em)
+{
+  .plan > fieldset
+  {
+    width: 32.99%;
+    float: left;
+  }
+  .plan::after
+  {
+    content: '';
+    display:block;
+    clear: both;
+  }
 }
 
 .planEntries
