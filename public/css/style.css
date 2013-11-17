@@ -134,6 +134,8 @@ html
     font-family: sans;
     white-space: pre-wrap;
     font-size: 1em;
+    background-color: transparent;
+    color: inherit;
 }
 
 

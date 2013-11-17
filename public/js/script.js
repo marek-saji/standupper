@@ -45,7 +45,7 @@
     {
       clearTimeout(event.target.dataset.saveTimeout);
       event.target.dataset.saveTimeout = setTimeout(function () {
-        savePlanPart(event.target, event.target.textContent.trim().split('\n'));
+        savePlanPart(event.target, event.target.value.trim().split('\n'));
       }, SAVE_DELAY);
     }
   });
@@ -78,7 +78,7 @@
         }
         else
         {
-          element.textContent = data[name].join("\n");
+          element.value = data[name].join("\n");
         }
       }
     });
