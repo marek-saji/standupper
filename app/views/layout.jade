@@ -25,6 +25,28 @@ html(lang='en')
       block content
     footer#foot
       block footer
+        small.copyright
+          block copyright
+            p
+              | ©2013 by 
+              a.hcard.url.fn(href="http://holonglobe.com") HolonGlobe
+              | , 
+              a.hcard.url.fn(href="https://delicious.com/saji_") Marek `saji' Augustynowicz
+              | . 
+              a(href="https://github.com/HolonGlobe/standupper") Source code available on GitHub
+              |  under 
+              a(rel='license', href="https://github.com/HolonGlobe/standupper/blob/master/LICENSE") MIT License
+              | .
+              p
+                | Icons from 
+                a(href="http://icomoon.io/#icons") IcoMoon Pack</a>
+                |  by 
+                a(href="http://twitter.com/keyamoon") Keyamoon
+                | .
+                | Licensed under
+                a(rel='license', href="http://creativecommons.org/licenses/by/3.0/")
+                  abbrev(title="Creative Commons Attribution 3.0 Unported") CC BY
+                | .
     block js
       if useSockets
         script(src='/socket.io/socket.io.js')
