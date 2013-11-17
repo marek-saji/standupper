@@ -15,12 +15,13 @@ html(lang='en')
       script(src='//' + config.server.host + ':' + config.server.livereload.port + '/livereload.js')
   body
     header#head
-      h1= config.app.name
+      h1
+        a(href="/")= config.app.name
       if user
         div.user
           +User(user)
           |  
-          a(href='/deauth') de-auth
+          a(href='/deauth').i18n de-auth
     div#content
       block content
     footer#foot
