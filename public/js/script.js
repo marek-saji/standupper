@@ -1,7 +1,10 @@
 (function _bindPlanEvents () {
   'use strict';
 
-  var SAVE_DELAY = 20;
+  var DAY_CHOOSER_DELAY = 750,
+      SAVE_DELAY = 20;
+  var dayChooser,
+      dayChooserTimeout;
 
   var socket = window.io && io.connect('/socket/' + window.location.pathname);
 
@@ -78,6 +81,35 @@
           element.textContent = data[name].join("\n");
         }
       }
+    });
+  }
+
+
+
+  dayChooser = document.querySelector('.dayChooser input[type=date]');
+
+  if (dayChooser)
+  {
+    dayChooser.addEventListener('change', function () {
+      clearTimeout(dayChooserTimeout);
+      dayChooserTimeout = setTimeout(
+        function () {
+          window.location.href = '/plan/' + dayChooser.value;
+        },
+        DAY_CHOOSER_DELAY
+      );
+    });
+    dayChooser.previousElementSibling.addEventListener('click', function () {
+      var date = dayChooser.valueAsDate;
+      date.setDate( date.getDate() - 1 );
+      dayChooser.valueAsDate = date;
+      window.location.href = '/plan/' + dayChooser.value;
+    });
+    dayChooser.nextElementSibling.addEventListener('click', function () {
+      var date = dayChooser.valueAsDate;
+      date.setDate( date.getDate() + 1 );
+      dayChooser.valueAsDate = date;
+      window.location.href = '/plan/' + dayChooser.value;
     });
   }
 

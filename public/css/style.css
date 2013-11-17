@@ -32,6 +32,28 @@ html
 }
 
 
+.plans .dayChooser
+{
+  text-align: center;
+}
+.plans .dayChooser input[type=date]
+{
+  font-size: 1.6em;
+}
+.plans .dayChooser input[type=date]::-webkit-clear-button,
+.plans .dayChooser input[type=date]::-webkit-inner-spin-button
+{ display: none; }
+.plans .dayChooser input[type=date]::-moz-clear-button,
+.plans .dayChooser input[type=date]::-moz-inner-spin-button
+{ display: none; }
+.plans .dayChooser input[type=date]::-o-clear-button,
+.plans .dayChooser input[type=date]::-o-inner-spin-button
+{ display: none; }
+.plans .dayChooser input[type=date]::clear-button,
+.plans .dayChooser input[type=date]::inner-spin-button
+{ display: none; }
+
+
 .plan
 {
     padding-left: 5.25em;

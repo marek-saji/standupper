@@ -4,6 +4,23 @@ include ../atomic/molecules
 block content
   - var classNames, mine;
   content.plans
+    div.dayChooser
+      button.prev(title='Previous day') ←
+      input(type='date', value=date)
+      button.next(title='Next day') →
+      div.relative
+        small
+          span.i18n
+            if date == yesterday
+                | yesterday
+            else if date == today
+                | today
+            else if date == tomorrow
+                | tomorrow
+      div.today-link
+        if date != today
+          a.i18n(href='/plan/' + today) go to today
+
     for plan in plans
       // if previous was mine
       if mine

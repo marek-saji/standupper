@@ -50,7 +50,10 @@ function registerNamespace (req)
 
 
 exports.index = function (req, res) {
-  var date = Plan.dateToISODateString(req.params.date);
+  var date = Plan.dateToISODateString(req.params.date),
+      today = new Date(),
+      yesterday = (new Date(today)).setDate(today.getDate() - 1),
+      tomorrow  = (new Date(today)).setDate(today.getDate() + 1);
 
   registerNamespace(req);
 
@@ -100,6 +103,10 @@ exports.index = function (req, res) {
       res.render('plan/index', {
         useSockets: true,
         title: 'plan',
+        date:  date,
+        yesterday: Plan.dateToISODateString(yesterday),
+        today: Plan.dateToISODateString(today),
+        tomorrow: Plan.dateToISODateString(tomorrow),
         plans: plans
       });
     })
