@@ -4,6 +4,9 @@ var nconf = require('nconf'),
     defaults;
 
 defaults = {
+  app: {
+    name: 'StandUpper'
+  },
   root: rootPath,
   server: {
     host: '0.0.0.0',
