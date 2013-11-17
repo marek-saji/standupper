@@ -1,4 +1,5 @@
 var express  = require('express'),
+    MongoStore = require('connect-mongo')(express);
     passport = require('./passport');
 
 module.exports = function(app, server, config) {
@@ -14,7 +15,9 @@ module.exports = function(app, server, config) {
     app.use(express.cookieParser());
 
     var sessionSecret = 'OHAI',
-        store = new express.session.MemoryStore();
+        store = new MongoStore({
+          url: config.db
+        });
     app.use(express.session({
       secret: sessionSecret,
       store: store
