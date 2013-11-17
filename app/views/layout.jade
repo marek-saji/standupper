@@ -18,11 +18,7 @@ html(lang='en')
       h1 StandUpper
       if user
         div.user
-          span.hcard
-            if user.avatarUrl
-              img.photo(src=user.avatarUrl)
-            span.fn
-              = user.displayName
+          +User(user)
           |  
           a(href='/deauth') de-auth
     block content

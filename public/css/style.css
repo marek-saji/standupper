@@ -32,3 +32,18 @@ html
     white-space: pre-wrap;
     font-size: 1em;
 }
+
+
+/* MOLECULES */
+
+/* User */
+
+.molecule_User .photo
+{
+    width:  3em;
+    height: 3em;
+    max-width:  80px;
+    max-height: 80px;
+    vertical-align: middle;
+    margin-right: 0.5em;
+}

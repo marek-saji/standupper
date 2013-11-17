@@ -1,0 +1,15 @@
+extends atoms
+
+mixin User(user)
+  span.hcard.molecule_User(data-user-id=user._id)
+    if user.avatarUrl
+      img.photo(src=user.avatarUrl)
+    else
+      img.photo(src='//gravatar.com/avatar/' + user.gravatarId + '?size=80&default=identicon')
+    span.fn
+      = user.displayName
+    // TODO debug stuff
+    small.providers
+      |  (
+      = user.ids.map(function (entry) { return entry.provider; }).join(', ')
+      | )
