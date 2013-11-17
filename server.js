@@ -17,9 +17,11 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 });
 
 var app = express();
+var http = require('http');
+var server = http.createServer(app);
 
-require('./config/express')(app, config);
-require('./config/routes')(app, config);
-
-app.listen(config.server.port, config.server.host);
+server.listen(config.server.port, config.server.host);
 console.log('Listening on ' + config.server.host + ':' + config.server.port);
+
+require('./config/express')(app, server, config);
+require('./config/routes')(app, config);

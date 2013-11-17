@@ -1,6 +1,10 @@
 (function _bindPlanEvents () {
   'use strict';
 
+  var SAVE_DELAY = 20;
+
+  var socket = window.io && io.connect('/socket/' + window.location.pathname);
+
   function getPlanContext (element)
   {
     var context = element.parentElement;
@@ -29,25 +33,17 @@
       data = { _id: context.id };
       data[ name ] = value;
 
-      req = new XMLHttpRequest();
-      req.onload = function () {
-        // TODO
-      };
-      req.onerror = function () {
-        // TODO
-      };
-
-      req.open('POST', window.location, true);
-      req.setRequestHeader('Content-Type', 'application/json');
-
-      req.send( JSON.stringify(data) );
+      socket.emit('save', data);
     }
   }
 
-  document.addEventListener('focusout', function (event) {
+  document.addEventListener('input', function (event) {
     if (event.target.classList.contains('planEntries'))
     {
-      savePlanPart(event.target, event.target.textContent.trim().split("\n"));
+      clearTimeout(event.target.dataset.saveTimeout);
+      event.target.dataset.saveTimeout = setTimeout(function () {
+        savePlanPart(event.target, event.target.textContent.trim().split('\n'));
+      }, SAVE_DELAY);
     }
   });
 
@@ -58,5 +54,32 @@
       getPlanContext(event.target).classList.toggle(event.target.name, event.target.checked);
     }
   });
+
+  if (socket)
+  {
+    socket.on('update', function (data) {
+      var context = document.getElementById(data._id),
+          element,
+          name;
+      for (name in data)
+      {
+        element = context.querySelector('[name=' + name + '], [data-name=' + name + ']');
+        if (!element)
+        {
+          continue;
+        }
+        else if ('INPUT' === element.tagName && 'checkbox' === element.type)
+        {
+          element.checked = data[name];
+          context.classList.toggle(name, data[name]);
+        }
+        else
+        {
+          element.textContent = data[name].join("\n");
+        }
+      }
+    });
+  }
+
 
 }());

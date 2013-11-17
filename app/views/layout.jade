@@ -26,4 +26,6 @@ html(lang='en')
     footer#foot
       block footer
     block js
+      if useSockets
+        script(src='/socket.io/socket.io.js')
       script(src='/js/script.js')

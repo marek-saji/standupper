@@ -14,7 +14,9 @@
     "passport-dropbox": "~0.1.2",
     "passport-facebook": "~1.0.1",
     "passport-google": "~0.3.0",
-    "nconf": "~0.6.7"
+    "nconf": "~0.6.7",
+    "socket.io": "~0.9.16",
+    "passport.socketio": "~2.1.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

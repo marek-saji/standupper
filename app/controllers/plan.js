@@ -2,8 +2,58 @@ var mongoose = require('mongoose'),
     Plan = mongoose.model('Plan'),
     Promise = require('mongoose/lib/promise');
 
+var io = require('../../js/io')(),
+    namespaces = {};
+
+// register corresponding namespace, if does not
+// already exist
+function registerNamespace (req)
+{
+  var ns = req.url,
+      socket;
+  if (namespaces[ns])
+  {
+    return;
+  }
+
+  socket = io.of('/socket/' + ns)
+
+  socket.on('connection', function (socket) {
+
+    socket.on('save', function (data) {
+      Plan.findById(data._id).exec()
+        .then(function (foundPlan) {
+          var promise = new Promise(),
+              plan = (null === foundPlan) ? new Plan() : foundPlan;
+          delete data._id;
+          delete data.user;
+          delete data.date;
+          plan.set(data);
+          if (plan.user == req.user._id)
+          {
+            plan.save(promise.resolve.bind(promise));
+          }
+          else
+          {
+            promise.reject(403);
+          }
+          return promise;
+        })
+        .then(function (savedPlan) {
+          socket.broadcast.emit('update', savedPlan);
+        });
+    });
+
+  });
+
+}
+
+
 exports.index = function (req, res) {
   var date = Plan.dateToISODateString(req.params.date);
+
+  registerNamespace(req);
+
   Plan.find().where('date').equals(date)
     .populate('user')
     .exec()
@@ -48,6 +98,7 @@ exports.index = function (req, res) {
         }
       });
       res.render('plan/index', {
+        useSockets: true,
         title: 'plan',
         plans: plans
       });
