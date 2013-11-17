@@ -47,7 +47,7 @@
   document.addEventListener('focusout', function (event) {
     if (event.target.classList.contains('planEntries'))
     {
-      savePlanPart(event.target, event.target.innerText.trim().split("\n"));
+      savePlanPart(event.target, event.target.textContent.trim().split("\n"));
     }
   });
 
