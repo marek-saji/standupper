@@ -1,11 +1,25 @@
+function delayCall (callback, delay)
+{
+  var id;
+  return function () {
+    var argv = Array.prototype.slice.call(arguments);
+    if (argv[0] instanceof Event)
+    {
+      argv[0].preventDefault();
+    }
+    clearTimeout(id);
+    id = setTimeout(callback.bind.apply(callback, [this].concat(argv)), delay);
+  }.bind(this);
+}
+
+
 (function _bindPlanEvents () {
   'use strict';
 
   var TEXTAREA_AUTOEXPANDABLE_DELAY = 20,
       DAY_CHOOSER_DELAY = 750,
       SAVE_DELAY = 20;
-  var dayChooser,
-      dayChooserTimeout;
+  var dayChooser;
 
   var socket = window.io && io.connect('/socket/' + window.location.pathname);
 
@@ -149,15 +163,10 @@
 
   if (dayChooser)
   {
-    dayChooser.addEventListener('change', function () {
-      clearTimeout(dayChooserTimeout);
-      dayChooserTimeout = setTimeout(
-        function () {
-          window.location.href = '/plan/' + dayChooser.value;
-        },
-        DAY_CHOOSER_DELAY
-      );
-    });
+    // give it a delay to allow changing date with a spinner
+    dayChooser.addEventListener('change', delayCall(function () {
+      window.location.href = '/plan/' + dayChooser.value;
+    }, DAY_CHOOSER_DELAY));
     dayChooser.previousElementSibling.addEventListener('click', function () {
       var date = dayChooser.valueAsDate;
       date.setDate( date.getDate() - 1 );
