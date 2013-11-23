@@ -2,6 +2,8 @@
 
 A simple tool for cunducting scrumm meetings online. Soon to evolve into daily planning and time tracking tool. Still simple.
 
+[![Code Climate](https://codeclimate.com/github/marek-saji/standupper.png)](https://codeclimate.com/github/marek-saji/standupper)
+
 
 ## Running
 
