@@ -14,14 +14,12 @@ function delayCall (callback, delay)
 
 
 (function _bindPlanEvents () {
+
   'use strict';
 
-  var TEXTAREA_AUTOEXPANDABLE_DELAY = 20,
-      DAY_CHOOSER_DELAY = 750,
-      SAVE_DELAY = 20;
-  var dayChooser;
+  var SAVE_DELAY = 20;
 
-  var socket = window.io && io.connect('/socket/' + window.location.pathname);
+  var socket = window.io && window.io.connect('/socket/' + window.location.pathname);
 
   function getPlanContext (element)
   {
@@ -81,85 +79,99 @@ function delayCall (callback, delay)
           name;
       for (name in data)
       {
-        element = context.querySelector('[name=' + name + '], [data-name=' + name + ']');
-        if (!element)
+        if (data.hasOwnProperty(name))
         {
-          continue;
-        }
-        else if ('INPUT' === element.tagName && 'checkbox' === element.type)
-        {
-          element.checked = data[name];
-          context.classList.toggle(name, data[name]);
-        }
-        else
-        {
-          element.value = data[name].join("\n");
+          element = context.querySelector('[name=' + name + '], [data-name=' + name + ']');
+          if (!element)
+          {
+            continue;
+          }
+          else if ('INPUT' === element.tagName && 'checkbox' === element.type)
+          {
+            element.checked = data[name];
+            context.classList.toggle(name, data[name]);
+          }
+          else
+          {
+            element.value = data[name].join("\n");
+          }
         }
       }
     });
   }
 
+}());
 
-  Array.prototype.forEach.call(
-    document.querySelectorAll('textarea.autoexpandable'),
-    function (textarea) {
-      var clone,
-          paddingBottom;
 
-      textarea.style.overflowY = 'hidden';
 
-      clone = textarea.cloneNode();
-      clone.style.visibility = 'hidden';
-      clone.style.position = 'absolute';
-      clone.style.left = 0;
-      clone.style.height = 'auto';
-      textarea.parentNode.insertBefore(clone, textarea.nextSibling);
+Array.prototype.forEach.call(
+  document.querySelectorAll('textarea.autoexpandable'),
+  function (textarea) {
+    var TEXTAREA_AUTOEXPANDABLE_DELAY = 20;
 
-      // make clone 1em in height
-      clone.style.height = '1em';
-      clone.style.minHeight = 0;
-      clone.style.padding = 0;
-      clone.style.margin = 0;
-      clone.value = '';
-      // store 1em
-      paddingBottom = clone.scrollHeight;
-      // restore textarea's styles
-      clone.style.minHeight = textarea.style.minHeight;
-      clone.style.padding = textarea.style.padding;
-      clone.style.margin = textarea.style.margin;
+    var clone,
+        paddingBottom;
 
-      if (textarea.style.transition)
-      {
-        textarea.style.transition += ', height 0.1s ease-in';
-      }
-      else
-      {
-        textarea.style.transition = 'height 0.1s ease-in';
-      }
+    textarea.style.overflowY = 'hidden';
 
-      function delayedFit () {
-        var id;
-        if (!id)
-        {
-          id = setTimeout(function () {
-            id = null;
+    clone = textarea.cloneNode();
+    clone.style.visibility = 'hidden';
+    clone.style.position = 'absolute';
+    clone.style.left = 0;
+    clone.style.height = 'auto';
+    textarea.parentNode.insertBefore(clone, textarea.nextSibling);
 
-            clone.value = textarea.value;
-            clone.style.width = textarea.style.width;
-            textarea.style.height = clone.scrollHeight + paddingBottom + 'px';
-          }, TEXTAREA_AUTOEXPANDABLE_DELAY);
-        }
-      }
+    // make clone 1em in height
+    clone.style.height = '1em';
+    clone.style.minHeight = 0;
+    clone.style.padding = 0;
+    clone.style.margin = 0;
+    clone.value = '';
+    // store 1em
+    paddingBottom = clone.scrollHeight;
+    // restore textarea's styles
+    clone.style.minHeight = textarea.style.minHeight;
+    clone.style.padding = textarea.style.padding;
+    clone.style.margin = textarea.style.margin;
 
-      delayedFit();
-      textarea.addEventListener('input', delayedFit);
-      window.addEventListener('resize',  delayedFit);
+    if (textarea.style.transition)
+    {
+      textarea.style.transition += ', height 0.1s ease-in';
     }
-  );
+    else
+    {
+      textarea.style.transition = 'height 0.1s ease-in';
+    }
+
+    function delayedFit () {
+      var id;
+      if (!id)
+      {
+        id = setTimeout(function () {
+          id = null;
+
+          clone.value = textarea.value;
+          clone.style.width = textarea.style.width;
+          textarea.style.height = clone.scrollHeight + paddingBottom + 'px';
+        }, TEXTAREA_AUTOEXPANDABLE_DELAY);
+      }
+    }
+
+    delayedFit();
+    textarea.addEventListener('input', delayedFit);
+    window.addEventListener('resize',  delayedFit);
+  }
+);
 
 
 
-  dayChooser = document.querySelector('.dayChooser input[type=date]');
+(function _bindDayChooserEvents () {
+
+  'use strict';
+
+  var DAY_CHOOSER_DELAY = 750;
+
+  var dayChooser = document.querySelector('.dayChooser input[type=date]');
 
   if (dayChooser)
   {
@@ -169,7 +181,7 @@ function delayCall (callback, delay)
     }, DAY_CHOOSER_DELAY));
     dayChooser.parentNode.addEventListener('click', function (event) {
       var date,
-          step = parseInt(event.target.dataset.step);
+          step = parseInt(event.target.dataset.step, 10);
       if (step)
       {
         date = dayChooser.valueAsDate;
@@ -179,6 +191,5 @@ function delayCall (callback, delay)
       }
     });
   }
-
 
 }());
