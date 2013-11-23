@@ -1,7 +1,8 @@
 (function _bindPlanEvents () {
   'use strict';
 
-  var DAY_CHOOSER_DELAY = 750,
+  var TEXTAREA_AUTOEXPANDABLE_DELAY = 20,
+      DAY_CHOOSER_DELAY = 750,
       SAVE_DELAY = 20;
   var dayChooser,
       dayChooserTimeout;
@@ -83,6 +84,64 @@
       }
     });
   }
+
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll('textarea.autoexpandable'),
+    function (textarea) {
+      var clone,
+          paddingBottom;
+
+      textarea.style.overflowY = 'hidden';
+
+      clone = textarea.cloneNode();
+      clone.style.visibility = 'hidden';
+      clone.style.position = 'absolute';
+      clone.style.left = 0;
+      clone.style.height = 'auto';
+      textarea.parentNode.insertBefore(clone, textarea.nextSibling);
+
+      // make clone 1em in height
+      clone.style.height = '1em';
+      clone.style.minHeight = 0;
+      clone.style.padding = 0;
+      clone.style.margin = 0;
+      clone.value = '';
+      // store 1em
+      paddingBottom = clone.scrollHeight;
+      // restore textarea's styles
+      clone.style.minHeight = textarea.style.minHeight;
+      clone.style.padding = textarea.style.padding;
+      clone.style.margin = textarea.style.margin;
+
+      if (textarea.style.transition)
+      {
+        textarea.style.transition += ', height 0.1s ease-in';
+      }
+      else
+      {
+        textarea.style.transition = 'height 0.1s ease-in';
+      }
+
+      function delayedFit () {
+        var id;
+        if (!id)
+        {
+          id = setTimeout(function () {
+            id = null;
+
+            clone.value = textarea.value;
+            clone.style.width = textarea.style.width;
+            textarea.style.height = clone.scrollHeight + paddingBottom + 'px';
+          }, TEXTAREA_AUTOEXPANDABLE_DELAY);
+        }
+      }
+
+      delayedFit();
+      textarea.addEventListener('input', delayedFit);
+      window.addEventListener('resize',  delayedFit);
+    }
+  );
 
 
 
