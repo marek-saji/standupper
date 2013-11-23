@@ -167,17 +167,16 @@ function delayCall (callback, delay)
     dayChooser.addEventListener('change', delayCall(function () {
       window.location.href = '/plan/' + dayChooser.value;
     }, DAY_CHOOSER_DELAY));
-    dayChooser.previousElementSibling.addEventListener('click', function () {
-      var date = dayChooser.valueAsDate;
-      date.setDate( date.getDate() - 1 );
-      dayChooser.valueAsDate = date;
-      window.location.href = '/plan/' + dayChooser.value;
-    });
-    dayChooser.nextElementSibling.addEventListener('click', function () {
-      var date = dayChooser.valueAsDate;
-      date.setDate( date.getDate() + 1 );
-      dayChooser.valueAsDate = date;
-      window.location.href = '/plan/' + dayChooser.value;
+    dayChooser.parentNode.addEventListener('click', function (event) {
+      var date,
+          step = parseInt(event.target.dataset.step);
+      if (step)
+      {
+        date = dayChooser.valueAsDate;
+        date.setDate( date.getDate() + step );
+        dayChooser.valueAsDate = date;
+        window.location.href = '/plan/' + dayChooser.value;
+      }
     });
   }
 
