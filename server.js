@@ -20,6 +20,8 @@ var app = express();
 var http = require('http');
 var server = http.createServer(app);
 
+http.globalAgent.maxSockets = Infinity;
+
 server.listen(config.server.port, config.server.host);
 console.log('Listening on ' + config.server.host + ':' + config.server.port);
 
