@@ -2,15 +2,19 @@ include atoms
 
 h2 Molecules
 
+mixin User(user, size)
+  - size = parseInt(size, 10) || 80
 
-mixin User(user)
   span.hcard.molecule_User(data-user-id=user._id)
     if user.avatarUrl
-      img.photo(src=user.avatarUrl)
+      - var avatarUrl = user.avatarUrl
     else
-      - var gravatarUrl = '//gravatar.com/avatar/' + user.gravatarId + '?size=80';
-      - var roboHashUrl = '//robohash.org/' + gravatarId + '?size=80x80';
-      img.photo(width=80)(height=80)(src=gravatarUrl + '&d=' + escape(roboHashUrl))
+      - var gravatarUrl = '//gravatar.com/avatar/' + user.gravatarId + '?size=' + size;
+      - var roboHashUrl = '//robohash.org/' + gravatarId + '.png?size=' + size + 'x' + size;
+      // gravatar will ignore query string of "d" parameter
+      // (robohash's size)
+      - var avatarUrl = gravatarUrl + '&d=' + escape(roboHashUrl);
+    img.photo(width=size, height=size, src=avatarUrl)
     span.fn
       = user.displayName
     // TODO debug stuff
