@@ -27,6 +27,8 @@ module.exports = function (app, config) {
     requireAuthenticated
   ]);
 
+  app.get('/atomic', common, require('../app/controllers/atomic').index);
+
   app.get('/', function (req, res) {
     res.redirect('/plan');
   });

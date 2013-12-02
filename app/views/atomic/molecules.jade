@@ -1,4 +1,7 @@
-extends atoms
+include atoms
+
+h2 Molecules
+
 
 mixin User(user)
   span.hcard.molecule_User(data-user-id=user._id)
@@ -15,3 +18,48 @@ mixin User(user)
       |  (
       = user.ids.map(function (entry) { return entry.provider; }).join(', ')
       | )
+
+section
+  h3 +User
+
+  p Short user information (avatar + name)
+
+  h4 with avatar
+  +User({
+    _id:          '000000000000000000000000',
+    displayName:  'Red Robot',
+    ids:          [{provider: 'provider', id: 0}],
+    avatarUrl:    'http://robohash.org/1'
+  });
+
+  h4 with gravatar
+  +User({
+    _id:          '000000000000000000000000',
+    displayName:  'saji',
+    ids:          [{provider: 'provider', id: 0}],
+    gravatarId:   '514a514108e2319cb0fb1f8c19abeaeb'
+  });
+
+  h4 with no gravatar
+  +User({
+    _id:          '000000000000000000000000',
+    displayName:  'Purple Robot',
+    ids:          [{provider: 'provider', id: 0}],
+    gravatarId:   '514a514108e2319cb0fb1f8c19abeae0'
+  });
+
+  h4 bigger, with no gravatar
+  +User({
+    _id:          '000000000000000000000000',
+    displayName:  'Purple Robot',
+    ids:          [{provider: 'provider', id: 0}],
+    gravatarId:   '514a514108e2319cb0fb1f8c19abeae0'
+  }, 300);
+
+  h4 smaller, with no gravatar
+  +User({
+    _id:          '000000000000000000000000',
+    displayName:  'Purple Robot',
+    ids:          [{provider: 'provider', id: 0}],
+    gravatarId:   '514a514108e2319cb0fb1f8c19abeae0'
+  }, 40);
