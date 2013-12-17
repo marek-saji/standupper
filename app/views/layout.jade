@@ -8,15 +8,15 @@ html(lang='en')
         if title
           =title
           |  ☆ 
-        = config.app.name
+        = config ? config.app.name : ''
     block css
       link(rel='stylesheet', href='/css/style.css')
-    if config.server.livereload
+    if config && config.server.livereload
       script(src='//' + config.server.host + ':' + config.server.livereload.port + '/livereload.js')
   body
     header#head
       h1
-        a(href="/")= config.app.name
+        a(href="/")= config ? config.app.name : ''
       if user
         div.user
           +User(user)
