@@ -91,9 +91,13 @@ function delayCall (callback, delay)
             element.checked = data[name];
             context.classList.toggle(name, data[name]);
           }
-          else
+          else if (-1 !== ['INPUT', 'TEXTAREA'].indexOf(element.tagName))
           {
             element.value = data[name].join("\n");
+          }
+          else
+          {
+            element.textContent = data[name].join("\n");
           }
         }
       }

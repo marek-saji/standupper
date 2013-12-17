@@ -39,5 +39,9 @@ block content
           fieldset
             legend.i18n
               = title
-            textarea(disabled=!mine, data-name=name).planEntries.autoexpandable
-              = plan[name].join('\n')
+            if mine
+              textarea(data-name=name).planEntries.autoexpandable
+                = plan[name].join('\n')
+            else
+              div(data-name=name).planEntries
+                = plan[name].join('\n')
