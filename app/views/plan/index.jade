@@ -5,9 +5,9 @@ block content
   - var classNames, mine;
   content.plans
     div.dayChooser
-      button.prev(title='Previous day', data-step=-1) ←
+      a.prev(title='Previous day', href='/plan/'+prevDate) ←
       input(type='date', value=date)
-      button.next(title='Next day', data-step=+1) →
+      a.prev(title='Next day', href='/plan/'+nextDate) →
       div.relative
         small
           span.i18n

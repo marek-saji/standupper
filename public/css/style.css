@@ -36,6 +36,14 @@ html
 {
   text-align: center;
 }
+.dayChooser .prev,
+.dayChooser .next
+{
+  font-size: 2em;
+  text-decoration: none;
+  top: 0.1em;
+  position: relative;
+}
 .plans .dayChooser input[type=date]
 {
   font-size: 1.6em;

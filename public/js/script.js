@@ -179,17 +179,6 @@ Array.prototype.forEach.call(
     dayChooser.addEventListener('change', delayCall(function () {
       window.location.href = '/plan/' + dayChooser.value;
     }, DAY_CHOOSER_DELAY));
-    dayChooser.parentNode.addEventListener('click', function (event) {
-      var date,
-          step = parseInt(event.target.dataset.step, 10);
-      if (step)
-      {
-        date = dayChooser.valueAsDate;
-        date.setDate( date.getDate() + step );
-        dayChooser.valueAsDate = date;
-        window.location.href = '/plan/' + dayChooser.value;
-      }
-    });
   }
 
 }());

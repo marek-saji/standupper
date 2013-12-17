@@ -50,10 +50,18 @@ function registerNamespace (req)
 
 
 exports.index = function (req, res) {
-  var date = Plan.dateToISODateString(req.params.date),
+  var date = new Date (req.params.date),
+      prevDate = (new Date(date)).setDate(date.getDate() - 1),
+      nextDate = (new Date(date)).setDate(date.getDate() + 1),
       today = new Date(),
       yesterday = (new Date(today)).setDate(today.getDate() - 1),
       tomorrow  = (new Date(today)).setDate(today.getDate() + 1);
+  date      = Plan.dateToISODateString(date);
+  prevDate  = Plan.dateToISODateString(prevDate);
+  nextDate  = Plan.dateToISODateString(nextDate);
+  today     = Plan.dateToISODateString(today);
+  yesterday = Plan.dateToISODateString(yesterday);
+  tomorrow  = Plan.dateToISODateString(tomorrow);
 
   registerNamespace(req);
 
@@ -101,13 +109,15 @@ exports.index = function (req, res) {
         }
       });
       res.render('plan/index', {
-        useSockets: true,
-        title: 'plan',
-        date:  date,
-        yesterday: Plan.dateToISODateString(yesterday),
-        today: Plan.dateToISODateString(today),
-        tomorrow: Plan.dateToISODateString(tomorrow),
-        plans: plans
+        useSockets:  true,
+        title:       'plan',
+        date:        date,
+        prevDate:    prevDate,
+        nextDate:    nextDate,
+        yesterday:   yesterday,
+        today:       today,
+        tomorrow:    tomorrow,
+        plans:       plans
       });
     })
     .onReject(function (error) {
