@@ -5,6 +5,28 @@ var mongoose = require('mongoose'),
 var io = require('../../js/io')(),
     namespaces = {};
 
+function savePlan(id, data, user_id)
+{
+  return Plan.findById(id).exec()
+    .then(function (foundPlan) {
+      var promise = new Promise(),
+          plan = (null === foundPlan) ? new Plan() : foundPlan;
+      if (data.draft !== undefined) plan.draft = data.draft;
+      if (data.prev !== undefined) plan.prev = data.prev;
+      if (data.next !== undefined) plan.next = data.next;
+      if (data.obst !== undefined) plan.obst = data.obst;
+      if (plan.user == user_id)
+      {
+        plan.save(promise.resolve.bind(promise));
+      }
+      else
+      {
+        promise.reject(403);
+      }
+      return promise;
+    });
+}
+
 // register corresponding namespace, if does not
 // already exist
 function registerNamespace (req)
@@ -16,32 +38,14 @@ function registerNamespace (req)
     return;
   }
 
-  socket = io.of('/socket/' + ns)
+  socket = io.of('/socket/' + ns);
 
   socket.on('connection', function (socket) {
 
     socket.on('save', function (data) {
-      Plan.findById(data._id).exec()
-        .then(function (foundPlan) {
-          var promise = new Promise(),
-              plan = (null === foundPlan) ? new Plan() : foundPlan;
-          delete data._id;
-          delete data.user;
-          delete data.date;
-          plan.set(data);
-          if (plan.user == req.user._id)
-          {
-            plan.save(promise.resolve.bind(promise));
-          }
-          else
-          {
-            promise.reject(403);
-          }
-          return promise;
-        })
-        .then(function (savedPlan) {
-          socket.broadcast.emit('update', savedPlan);
-        });
+      savePlan(data._id, data, req.user._id).then(function (savedPlan) {
+        socket.broadcast.emit('update', savedPlan);
+      });
     });
 
   });
@@ -109,50 +113,21 @@ exports.index = function (req, res) {
     });
 };
 
+// TODO deprecated
 exports.save = function(req, res) {
-  Plan.findById(req.body._id).exec()
-
-    .then(function (foundPlan) {
-      var promise = new Promise(),
-          plan = (null === foundPlan) ? new Plan() : foundPlan,
-          data = req.body;
-      delete data._id;
-      delete data.user;
-      delete data.date;
-      plan.set(data);
-      if (plan.user == req.user._id)
-      {
-        plan.save(promise.resolve.bind(promise));
-      }
-      else
-      {
-        promise.reject(403);
-      }
-      return promise;
-    })
-
-    .then(
-      function (savedPlan) {
-        res.json(
-          200,
-          {
-            plan: savedPlan
-          }
-        );
-      },
-      function (error) {
-        var httpCode = 500;
-        if (error === ~~error)
-        {
-          httpCode = error;
-        }
-        res.json(
-          httpCode,
-          {
-            error: error.toString()
-          }
-        );
-        console.error(error.stack);
-      }
-    );
+  var data = {
+    draft: req.body.draft,
+    prev: req.body.prev.split("\n"),
+    next: req.body.next.split("\n"),
+    obst: req.body.obst.split("\n")
+  };
+  savePlan(req.body._id, data, req.user._id).then(
+    function (savedPlan) {
+      res.redirect(req.url);
+    },
+    function (error) {
+      res.status(403);
+      console.error(error);
+    }
+  );
 };

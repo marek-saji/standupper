@@ -162,6 +162,15 @@ section.atomic > h4
     color: inherit;
 }
 
+.molecule_StandUp .buttons
+{
+  text-align: right;
+}
+.molecule_StandUp .buttons input[type=submit]
+{
+  font-size: 1.5em;
+}
+
 /* ORGANISMS */
 
 /* PageHeader */

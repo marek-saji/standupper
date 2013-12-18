@@ -28,7 +28,7 @@ function delayCall (callback, delay)
     {
       return null;
     }
-    else if (context.classList.contains('plan'))
+    else if (context.classList.contains('molecule_StandUp'))
     {
       return context;
     }
@@ -70,6 +70,13 @@ function delayCall (callback, delay)
       getPlanContext(event.target).classList.toggle(event.target.name, event.target.checked);
     }
   });
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll('.molecule_StandUp input[type=submit]'),
+    function (submit) {
+      submit.style.display = 'none';
+    }
+  );
 
   if (socket)
   {
@@ -119,6 +126,7 @@ Array.prototype.forEach.call(
     textarea.style.overflowY = 'hidden';
 
     clone = textarea.cloneNode();
+    clone.disabled = true;
     clone.style.visibility = 'hidden';
     clone.style.position = 'absolute';
     clone.style.left = 0;

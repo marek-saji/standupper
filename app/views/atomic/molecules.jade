@@ -110,10 +110,11 @@ mixin StandUp(plan, mine)
   - classNames = [];
   - if (mine) classNames.push('mine');
   - if (plan.draft) classNames.push('draft');
-  form.molecule_StandUp(class = classNames, id=plan._id)
+  form.molecule_StandUp(class = classNames, id=plan._id, method='POST')
     h3
       +User(plan.user)
       label.draft-switch
+        input(type='hidden',name='draft',disabled=!mine)
         input(type='checkbox',name='draft',checked=plan.draft,disabled=!mine)
         span.i18n draft
     for title, name in {prev: 'Previously', next: 'Nextly', obst: 'Obstacles'}
@@ -121,11 +122,15 @@ mixin StandUp(plan, mine)
         legend.i18n
           = title
         if mine
-          textarea(data-name=name).planEntries.autoexpandable
+          textarea(name=name).planEntries.autoexpandable
             = plan[name].join('\n')
         else
           div(data-name=name).planEntries
             = plan[name].join('\n')
+    if mine
+      div.buttons
+        input(type='hidden', value=plan._id, name='_id').i18n
+        input(type='submit', value='Save').i18n
 
 section.atomic
   h3 +StandUp
