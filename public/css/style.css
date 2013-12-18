@@ -63,6 +63,10 @@ section.atomic > h4
 {
   font-size: 1.6em;
 }
+.molecule_DayChooser input[type=submit]
+{
+  font-size: 1.2em;
+}
 .molecule_DayChooser input[type=date]::-webkit-clear-button,
 .molecule_DayChooser input[type=date]::-webkit-inner-spin-button
 { display: none; }

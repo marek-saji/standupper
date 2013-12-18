@@ -83,9 +83,10 @@ mixin DayChooser(date, url)
   -   for (idx=3 ; idx-->0 ;) datesSet[idx] = gd(datesSet[idx]);
   - });
 
-  div.molecule_DayChooser
+  form(action=url).molecule_DayChooser
     a.prev(title='Previous day', href=url + datesByDate[0]) ←
-    input(type='date', value=datesByDate[1])
+    input(type='date', name='date', value=datesByDate[1])
+    input(type='submit', value='Change')
     a.prev(title='Next day', href=url + datesByDate[2]) →
     div.relative
       small

@@ -34,7 +34,8 @@ module.exports = function (app, config) {
   });
 
   app.get('/plan', function (req, res) {
-    var date = req.query.date || Plan.dateToISODateString(new Date());
+    var date = req.query.date || new Date();
+    date = Plan.dateToISODateString(date);
     res.redirect('/plan/' + date);
   });
 

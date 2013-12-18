@@ -1,15 +1,18 @@
-function delayCall (callback, delay)
+function getParentByClassName (className, element)
 {
-  var id;
-  return function () {
-    var argv = Array.prototype.slice.call(arguments);
-    if (argv[0] instanceof Event)
-    {
-      argv[0].preventDefault();
-    }
-    clearTimeout(id);
-    id = setTimeout(callback.bind.apply(callback, [this].concat(argv)), delay);
-  }.bind(this);
+  var context = element.parentElement;
+  if ('BODY' === context.tagName)
+  {
+    return null;
+  }
+  else if (context.classList.contains(className))
+  {
+    return context;
+  }
+  else
+  {
+    return getParentByClassName(className, context);
+  }
 }
 
 
@@ -21,22 +24,7 @@ function delayCall (callback, delay)
 
   var socket = window.io && window.io.connect('/socket/' + window.location.pathname);
 
-  function getPlanContext (element)
-  {
-    var context = element.parentElement;
-    if ('BODY' === context.tagName)
-    {
-      return null;
-    }
-    else if (context.classList.contains('molecule_StandUp'))
-    {
-      return context;
-    }
-    else
-    {
-      return getPlanContext(context);
-    }
-  }
+  var getPlanContext = getParentByClassName.bind(null, 'molecule_StandUp');
 
   function savePlanPart (element, value)
   {
@@ -177,20 +165,18 @@ Array.prototype.forEach.call(
 
 
 
-(function _bindDayChooserEvents () {
+Array.prototype.forEach.call(
+  document.querySelectorAll('.molecule_DayChooser'),
+  function (context) {
+    'use strict';
 
-  'use strict';
+    var dayChooser = context.querySelector('input[name=date]');
 
-  var DAY_CHOOSER_DELAY = 750;
-
-  var dayChooser = document.querySelector('.dayChooser input[type=date]');
-
-  if (dayChooser)
-  {
     // give it a delay to allow changing date with a spinner
-    dayChooser.addEventListener('change', delayCall(function () {
+    dayChooser.addEventListener('change', function () {
       window.location.href = '/plan/' + dayChooser.value;
-    }, DAY_CHOOSER_DELAY));
-  }
+    });
 
-}());
+    context.querySelector('input[type=submit]').style.display = 'none';
+  }
+);
