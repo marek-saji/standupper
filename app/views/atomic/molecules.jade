@@ -23,7 +23,7 @@ mixin User(user, size)
       = user.ids.map(function (entry) { return entry.provider; }).join(', ')
       | )
 
-section
+section.atomic
   h3 +User
 
   p Short user information (avatar + name)
@@ -67,3 +67,101 @@ section
     ids:          [{provider: 'provider', id: 0}],
     gravatarId:   '514a514108e2319cb0fb1f8c19abeae0'
   }, 40);
+
+
+
+mixin DayChooser(date, url)
+  - var gd = function (d) { return d.toISOString().split('T')[0]; };
+  - var datesByDate  = [null, new Date(gd(new Date(date))), null];
+  - var datesByToday = [null, new Date(gd(new Date())), null];
+  - [datesByDate, datesByToday].forEach(function (datesSet) {
+  -   var idx;
+  -   datesSet[0] = new Date(datesSet[1]);
+  -   datesSet[0].setDate(datesSet[1].getDate()-1);
+  -   datesSet[2] = new Date(datesSet[1]);
+  -   datesSet[2].setDate(datesSet[1].getDate()+1);
+  -   for (idx=3 ; idx-->0 ;) datesSet[idx] = gd(datesSet[idx]);
+  - });
+
+  div.molecule_DayChooser
+    a.prev(title='Previous day', href=url + datesByDate[0]) ←
+    input(type='date', value=datesByDate[1])
+    a.prev(title='Next day', href=url + datesByDate[2]) →
+    div.relative
+      small
+        span.i18n
+          if datesByDate[1] === datesByToday[0]
+              | yesterday
+          else if datesByDate[1] === datesByToday[1]
+              | today
+          else if datesByDate[1] === datesByToday[2]
+              | tomorrow
+    div.today-link
+      if datesByDate[1] !== datesByToday[1]
+        a.i18n(href=url + datesByToday[1]) go to today
+
+section.atomic
+  h3 +DayChooser
+
+  +DayChooser('2001-01-01', '/404/')
+
+
+mixin StandUp(plan, mine)
+  - classNames = [];
+  - if (mine) classNames.push('mine');
+  - if (plan.draft) classNames.push('draft');
+  form.molecule_StandUp(class = classNames, id=plan._id)
+    h3
+      +User(plan.user)
+      label.draft-switch
+        input(type='checkbox',name='draft',checked=plan.draft,disabled=!mine)
+        span.i18n draft
+    for title, name in {prev: 'Previously', next: 'Nextly', obst: 'Obstacles'}
+      fieldset
+        legend.i18n
+          = title
+        if mine
+          textarea(data-name=name).planEntries.autoexpandable
+            = plan[name].join('\n')
+        else
+          div(data-name=name).planEntries
+            = plan[name].join('\n')
+
+section.atomic
+  h3 +StandUp
+
+  h4 mine
+
+  +StandUp(
+    {
+      draft: false,
+      prev: ["Nothing", "More Nothing", "Quite a long entry trying to describe in detail something that could be summed up rather shortly, because it was completly and absolutely noting", "This is a fourth line and the end of the entry"],
+      next: ["Slacking off"],
+      obst: [""],
+      user: {
+        _id:          '000000000000000000000000',
+        displayName:  'Red Robot',
+        ids:          [{provider: 'provider', id: 0}],
+        avatarUrl:    'http://robohash.org/1'
+      }
+    },
+    true
+  )
+
+  h4 not mine, draft
+
+  +StandUp(
+    {
+      draft: true,
+      prev: ["Nothing", "More Nothing", "Quite a long entry trying to describe in detail something that could be summed up rather shortly, because it was completly and absolutely noting", "This is a fourth line and the end of the entry"],
+      next: ["Slacking off"],
+      obst: [""],
+      user: {
+        _id:          '000000000000000000000000',
+        displayName:  'Orange Robot',
+        ids:          [{provider: 'provider', id: 0}],
+        avatarUrl:    'http://robohash.org/2'
+      }
+    },
+    false
+  )

@@ -8,142 +8,27 @@ html
     box-sizing: border-box;
 }
 
-#head h1,
-#head .user
-{
-    display: inline;
-}
-
-#head .user
-{
-    float: right;
-    font-size: 0.8em;
-}
-#head .user .photo
-{
-    max-width:  1.5em;
-    max-height: 1.5em;
-}
-
-
 #content
 {
     clear: both;
 }
 
 
-.plans .dayChooser
-{
-  text-align: center;
-}
-.dayChooser .prev,
-.dayChooser .next
-{
-  font-size: 2em;
-  text-decoration: none;
-  top: 0.1em;
-  position: relative;
-}
-.plans .dayChooser input[type=date]
-{
-  font-size: 1.6em;
-}
-.plans .dayChooser input[type=date]::-webkit-clear-button,
-.plans .dayChooser input[type=date]::-webkit-inner-spin-button
-{ display: none; }
-.plans .dayChooser input[type=date]::-moz-clear-button,
-.plans .dayChooser input[type=date]::-moz-inner-spin-button
-{ display: none; }
-.plans .dayChooser input[type=date]::-o-clear-button,
-.plans .dayChooser input[type=date]::-o-inner-spin-button
-{ display: none; }
-.plans .dayChooser input[type=date]::clear-button,
-.plans .dayChooser input[type=date]::inner-spin-button
-{ display: none; }
+/* ATOMIC GALLERY */
 
-
-.plan
+section.atomic
 {
-    padding-left: 5.25em;
+  padding:        0;
+  outline:        #888 dashed thin;
+  margin-bottom:  1.5em;
 }
-
-.plan h3
+section.atomic > h3,
+section.atomic > h4
 {
-    font-size: 1.5em;
-    color: #555;
-    font-weight: normal;
-    margin: 1em 0 0.5em -3.5em;
-}
-
-.plan h3 .hcard .photo
-{
-    vertical-align: top;
-    float: left;
-}
-.plan.me h3 .hcard .fn
-{
-  color: #5884AD;
-}
-
-.plan > fieldset
-{
-    padding: 0;
-    border: #aaa solid thin;
-    margin-top: 1em;
-    transition: background-color 0.2s ease-in;
-}
-.plan .draft-switch
-{
-  margin-left: 1em;
-}
-.plan:not(.me) .draft-switch input,
-.plan:not(.me):not(.draft) .draft-switch
-{
-  display: none;
-}
-.plan.draft > fieldset
-{
-  background-color: #fea;
-}
-.plan .draft-switch
-{
-  color: orange;
-}
-.plan > fieldset > legend
-{
-    margin-left: 0.9em;
-    padding-left: 0.1em;
-    font-size: 1em;
-    color: #666;
-}
-
-@media all and (min-width: 80em)
-{
-  .plan > fieldset
-  {
-    width: 32.99%;
-    float: left;
-  }
-  .plan::after
-  {
-    content: '';
-    display:block;
-    clear: both;
-  }
-}
-
-.planEntries
-{
-    width: 100%;
-    min-height: 3em;
-    border: none;
-    padding: 1em;
-    margin: 0;
-    font-family: sans;
-    white-space: pre-wrap;
-    font-size: 1em;
-    background-color: transparent;
-    color: inherit;
+  font-size:  1em;
+  margin:     0;
+  padding:    1.5em;
+  background-color: #eee;
 }
 
 
@@ -159,4 +44,157 @@ html
     max-height: 80px;
     vertical-align: middle;
     margin-right: 0.5em;
+}
+
+
+.molecule_DayChooser
+{
+  text-align: center;
+}
+.molecule_DayChooser .prev,
+.molecule_DayChooser .next
+{
+  font-size: 2em;
+  text-decoration: none;
+  top: 0.1em;
+  position: relative;
+}
+.molecule_DayChooser input[type=date]
+{
+  font-size: 1.6em;
+}
+.molecule_DayChooser input[type=date]::-webkit-clear-button,
+.molecule_DayChooser input[type=date]::-webkit-inner-spin-button
+{ display: none; }
+.molecule_DayChooser input[type=date]::-moz-clear-button,
+.molecule_DayChooser input[type=date]::-moz-inner-spin-button
+{ display: none; }
+.molecule_DayChooser input[type=date]::-o-clear-button,
+.molecule_DayChooser input[type=date]::-o-inner-spin-button
+{ display: none; }
+.molecule_DayChooser input[type=date]::clear-button,
+.molecule_DayChooser input[type=date]::inner-spin-button
+{ display: none; }
+
+/* StandUp */
+
+.molecule_StandUp
+{
+    padding-left: 5.25em;
+}
+
+.molecule_StandUp h3
+{
+    font-size: 1.5em;
+    color: #555;
+    font-weight: normal;
+    margin: 1em 0 0.5em -3.5em;
+}
+
+.molecule_StandUp > h3 .molecule_User .photo
+{
+    vertical-align: top;
+    float: left;
+}
+.molecule_StandUp.mine > h3 .molecule_User .fn
+{
+  color: #5884AD;
+}
+
+.molecule_StandUp > fieldset
+{
+    padding: 0;
+    border: #aaa solid thin;
+    margin-top: 1em;
+    transition: background-color 0.2s ease-in;
+}
+.molecule_StandUp .draft-switch
+{
+  margin-left: 1em;
+}
+.molecule_StandUp:not(.mine) .draft-switch input,
+.molecule_StandUp:not(.mine):not(.draft) .draft-switch
+{
+  display: none;
+}
+.molecule_StandUp.draft > fieldset
+{
+  background-color: #fea;
+}
+.molecule_StandUp .draft-switch
+{
+  color: orange;
+}
+.molecule_StandUp > fieldset > legend
+{
+    margin-left: 0.9em;
+    padding-left: 0.1em;
+    font-size: 1em;
+    color: #666;
+}
+
+@media all and (min-width: 80em)
+{
+  .molecule_StandUp > fieldset
+  {
+    width: 32.99%;
+    float: left;
+  }
+  .molecule_StandUp::after
+  {
+    content: '';
+    display:block;
+    clear: both;
+  }
+}
+
+.molecule_StandUp .planEntries
+{
+    width: 100%;
+    min-height: 3em;
+    border: none;
+    padding: 1em;
+    margin: 0;
+    font-family: sans;
+    white-space: pre-wrap;
+    font-size: 1em;
+    background-color: transparent;
+    color: inherit;
+}
+
+/* ORGANISMS */
+
+/* PageHeader */
+
+.organism_PageHeader h1,
+.organism_PageHeader .user
+{
+    display: inline;
+}
+
+.organism_PageHeader .user
+{
+    float: right;
+    font-size: 0.8em;
+}
+.organism_PageHeader .user .photo
+{
+    max-width:  1.5em;
+    max-height: 1.5em;
+}
+
+/* PageFooter */
+
+.organism_PageFooter
+{
+  margin: 0;
+  font-size: 0.8em;
+}
+.organism_PageFooter p:first-child
+{
+  margin-top: 0;
+}
+.organism_PageFooter p:last-child
+{
+  margin-bottom: 0;
 }

@@ -1,3 +1,4 @@
+- var appName = config ? config.app.name : ''
 doctype 5
 html(lang='en')
   head
@@ -8,49 +9,16 @@ html(lang='en')
         if title
           =title
           |  ☆ 
-        = config ? config.app.name : ''
+        = appName
     block css
       link(rel='stylesheet', href='/css/style.css')
     if config && config.server.livereload
       script(src='//' + config.server.host + ':' + config.server.livereload.port + '/livereload.js')
   body
-    header#head
-      h1
-        a(href="/")= config ? config.app.name : ''
-      if user
-        div.user
-          +User(user)
-          |  
-          a(href='/deauth').i18n de-auth
+    +PageHeader(appName, user)
     div#content
       block content
-    footer#foot
-      block footer
-        small.copyright
-          block copyright
-            p
-              | ©2013 by 
-              a.hcard.url.fn(href="http://holonglobe.com") HolonGlobe
-              | , 
-              a.hcard.url.fn(href="https://delicious.com/saji_") Marek `saji' Augustynowicz
-              | . 
-              a(href="https://github.com/HolonGlobe/standupper") Source code available on GitHub
-              |  under 
-              a(rel='license', href="https://github.com/HolonGlobe/standupper/blob/master/LICENSE") MIT License
-              | .
-              p
-                | Icons from 
-                a(href="http://icomoon.io/#icons") IcoMoon Pack</a>
-                |  by 
-                a(href="http://twitter.com/keyamoon") Keyamoon
-                | , 
-                | robot avatars delivered by 
-                a(href="//robohash.org") Robohash.org
-                | . 
-                | Both licensed under 
-                a(rel='license', href="http://creativecommons.org/licenses/by/3.0/")
-                  abbrev(title="Creative Commons Attribution 3.0 Unported") CC BY
-                | .
+    +PageFooter()
     block js
       if useSockets
         script(src='/socket.io/socket.io.js')
