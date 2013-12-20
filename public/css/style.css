@@ -179,14 +179,26 @@ section.atomic > h4
 
 /* PageHeader */
 
-.organism_PageHeader h1,
-.organism_PageHeader .user
+.organism_PageHeader h1
 {
   display: inline;
+}
+.organism_PageHeader svg,
+.organism_PageHeader img
+{
+  width:   1.5em;
+  height:  1.5em;
+  margin-right:    0.25em;
+  vertical-align:  middle;
+}
+.organism_PageHeader h1 a
+{
+  text-decoration: none;
 }
 
 .organism_PageHeader .user
 {
+  display: inline;
   float: right;
   font-size: 0.8em;
 }
