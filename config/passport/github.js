@@ -25,9 +25,16 @@ var prepareGitHub = function (profile, accessToken) {
           json = '',
           emails;
       while (chunk = res.read()) json += chunk;
-      profile.emails = JSON.parse(json).map(function (email) {
-        return { value: email };
-      });
+      try
+      {
+        profile.emails = JSON.parse(json).map(function (email) {
+          return { value: email };
+        });
+      }
+      catch (error)
+      {
+        console.error("Failed to fetch user's e-mails: " + error + ". JSON: " + json);
+      }
       promise.fulfill(profile);
     });
   });
