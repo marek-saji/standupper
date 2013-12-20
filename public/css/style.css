@@ -1,16 +1,16 @@
 html
 {
-    font-family: sans;
+  font-family: sans;
 }
 
 *
 {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #content
 {
-    clear: both;
+  clear: both;
 }
 
 
@@ -38,12 +38,12 @@ section.atomic > h4
 
 .molecule_User .photo
 {
-    width:  3em;
-    height: 3em;
-    max-width:  80px;
-    max-height: 80px;
-    vertical-align: middle;
-    margin-right: 0.5em;
+  width:  3em;
+  height: 3em;
+  max-width:  80px;
+  max-height: 80px;
+  vertical-align: middle;
+  margin-right: 0.5em;
 }
 
 
@@ -84,21 +84,21 @@ section.atomic > h4
 
 .molecule_StandUp
 {
-    padding-left: 5.25em;
+  padding-left: 5.25em;
 }
 
 .molecule_StandUp h3
 {
-    font-size: 1.5em;
-    color: #555;
-    font-weight: normal;
-    margin: 1em 0 0.5em -3.5em;
+  font-size: 1.5em;
+  color: #555;
+  font-weight: normal;
+  margin: 1em 0 0.5em -3.5em;
 }
 
 .molecule_StandUp > h3 .molecule_User .photo
 {
-    vertical-align: top;
-    float: left;
+  vertical-align: top;
+  float: left;
 }
 .molecule_StandUp.mine > h3 .molecule_User .fn
 {
@@ -107,10 +107,10 @@ section.atomic > h4
 
 .molecule_StandUp > fieldset
 {
-    padding: 0;
-    border: #aaa solid thin;
-    margin-top: 1em;
-    transition: background-color 0.2s ease-in;
+  padding: 0;
+  border: #aaa solid thin;
+  margin-top: 1em;
+  transition: background-color 0.2s ease-in;
 }
 .molecule_StandUp .draft-switch
 {
@@ -131,10 +131,10 @@ section.atomic > h4
 }
 .molecule_StandUp > fieldset > legend
 {
-    margin-left: 0.9em;
-    padding-left: 0.1em;
-    font-size: 1em;
-    color: #666;
+  margin-left: 0.9em;
+  padding-left: 0.1em;
+  font-size: 1em;
+  color: #666;
 }
 
 @media all and (min-width: 80em)
@@ -154,16 +154,16 @@ section.atomic > h4
 
 .molecule_StandUp .planEntries
 {
-    width: 100%;
-    min-height: 3em;
-    border: none;
-    padding: 1em;
-    margin: 0;
-    font-family: sans;
-    white-space: pre-wrap;
-    font-size: 1em;
-    background-color: transparent;
-    color: inherit;
+  width: 100%;
+  min-height: 3em;
+  border: none;
+  padding: 1em;
+  margin: 0;
+  font-family: sans;
+  white-space: pre-wrap;
+  font-size: 1em;
+  background-color: transparent;
+  color: inherit;
 }
 
 .molecule_StandUp .buttons
@@ -182,18 +182,18 @@ section.atomic > h4
 .organism_PageHeader h1,
 .organism_PageHeader .user
 {
-    display: inline;
+  display: inline;
 }
 
 .organism_PageHeader .user
 {
-    float: right;
-    font-size: 0.8em;
+  float: right;
+  font-size: 0.8em;
 }
 .organism_PageHeader .user .photo
 {
-    max-width:  1.5em;
-    max-height: 1.5em;
+  max-width:  1.5em;
+  max-height: 1.5em;
 }
 
 /* PageFooter */
