@@ -210,10 +210,19 @@ section.atomic > h4
 
 /* PageFooter */
 
+.organism_PageFooter::before
+{
+  content: '\2767';
+  font-size: 2em;
+  padding: 1em 0;
+  text-align: center;
+  display: block;
+}
 .organism_PageFooter
 {
   margin: 0;
   font-size: 0.8em;
+  text-align: center;
 }
 .organism_PageFooter p:first-child
 {
