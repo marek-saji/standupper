@@ -13,9 +13,12 @@ var prepareGitHub = function (profile, accessToken) {
 
   // emails
   var request = https.get({
-    headers:  { 'Authorization': 'token ' + accessToken },
-    hostname: 'api.github.com',
-    path:     '/user/emails'
+    hostname:  'api.github.com',
+    path:      '/user/emails',
+    headers: {
+      'Authorization':  'token ' + accessToken,
+      'UserAgent':      'marek-saji/standupper'
+    }
   }, function (res) {
     res.on('readable', function () {
       var chunk,
