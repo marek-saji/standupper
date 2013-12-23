@@ -5,7 +5,7 @@ h2 Organisms
 mixin PageHeader(app_name, user)
   header.organism_PageHeader
     h1
-      +SvgImage('logo')
+      +SvgImage('logo', '')
       a(href="/")= app_name
     if user
       div.user

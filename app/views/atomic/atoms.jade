@@ -1,8 +1,14 @@
-mixin SvgImage(href)
-  svg
-    image(xlink:href='/images/' + href + '.svg', src='/images/' + href + '.png', width='100%', height='100%')
+mixin SvgImage(href, alt)
+  - var altId;
+  if undefined !== alt
+    - altId = 'svg' + (+ new Date()).toString(16) + Math.floor(Math.random() * 10) + '__alt';
+  svg(role='img', aria-labelledby=altId)
+    if undefined !== alt
+      title(id=altId)= alt
+    image(xlink:href='/images/' + href + '.svg', src='/images/' + href + '.png', role='presentation', alt=alt, width='100%', height='100%')
 
 h2 +SvgImage
   p SVG image with PNG fallback. Width and height have to be set by CSS.
 
   +SvgImage()
+  +SvgImage('logo', 'choosing an alternative text for logos is hard')
