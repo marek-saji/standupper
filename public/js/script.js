@@ -134,6 +134,7 @@ Array.prototype.forEach.call(
     clone.style.padding = textarea.style.padding;
     clone.style.margin = textarea.style.margin;
 
+    textarea.style.resize = 'none';
     if (textarea.style.transition)
     {
       textarea.style.transition += ', height 0.1s ease-in';
