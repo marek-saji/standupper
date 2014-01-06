@@ -152,7 +152,7 @@ Array.prototype.forEach.call(
           id = null;
 
           clone.value = textarea.value;
-          clone.style.width = textarea.style.width;
+          clone.style.width = textarea.offsetWidth + 'px';
           textarea.style.height = clone.scrollHeight + paddingBottom + 'px';
         }, TEXTAREA_AUTOEXPANDABLE_DELAY);
       }
