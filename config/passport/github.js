@@ -9,7 +9,10 @@ var prepareGitHub = function (profile, accessToken) {
   var promise = new Promise;
 
   // photos
-  profile.photos = [ { value: profile._json.avatar_url } ];
+  if (!profile.photos)
+  {
+    profile.photos = [ { value: profile._json.avatar_url } ];
+  }
 
   // emails
   var request = https.get({
