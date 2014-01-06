@@ -90,7 +90,7 @@ section.atomic > p
   padding-left: 5.25em;
 }
 
-.molecule_StandUp h3
+.molecule_StandUp > form > h1
 {
   font-size: 1.5em;
   color: #555;
@@ -98,17 +98,17 @@ section.atomic > p
   margin: 1em 0 0.5em -3.5em;
 }
 
-.molecule_StandUp > h3 .molecule_User .photo
+.molecule_StandUp > form > h1 .molecule_User .photo
 {
   vertical-align: top;
   float: left;
 }
-.molecule_StandUp.mine > h3 .molecule_User .fn
+.molecule_StandUp.mine > form > h1 .molecule_User .fn
 {
   color: #5884AD;
 }
 
-.molecule_StandUp > fieldset
+.molecule_StandUp > form > fieldset
 {
   padding: 0;
   border: #aaa solid thin;
@@ -124,7 +124,7 @@ section.atomic > p
 {
   display: none;
 }
-.molecule_StandUp.draft > fieldset
+.molecule_StandUp.draft > form > fieldset
 {
   background-color: #fea;
 }
@@ -132,7 +132,7 @@ section.atomic > p
 {
   color: orange;
 }
-.molecule_StandUp > fieldset > legend
+.molecule_StandUp > form > fieldset > legend
 {
   margin-left: 0.9em;
   padding-left: 0.1em;
@@ -142,7 +142,7 @@ section.atomic > p
 
 @media all and (min-width: 80em)
 {
-  .molecule_StandUp > fieldset
+  .molecule_StandUp > form > fieldset
   {
     width: 32.99%;
     float: left;
