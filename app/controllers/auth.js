@@ -1,4 +1,5 @@
-var passport = require('passport');
+var passport = require('passport'),
+    config = require('../../config/config');
 
 
 exports.auth = function (req, res) {
@@ -18,8 +19,8 @@ exports.strategy = function (req, res, next) {
   if (passport._strategies[ strategy ])
   {
     return passport.authenticate(req.params[0], {
-      failureRedirect: '/auth',
-      successRedirect: '/'
+      failureRedirect: config.server.url + '/auth',
+      successRedirect: config.server.url + '/'
     }).apply(this, arguments);
   }
   else
