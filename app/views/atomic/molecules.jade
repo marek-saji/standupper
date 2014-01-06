@@ -24,11 +24,11 @@ mixin User(user, size)
       | )
 
 section.atomic
-  h3 +User
+  h1 +User
 
   p Short user information (avatar + name)
 
-  h4 with avatar
+  h2 with avatar
   +User({
     _id:          '000000000000000000000000',
     displayName:  'Red Robot',
@@ -36,7 +36,7 @@ section.atomic
     avatarUrl:    'http://robohash.org/1'
   });
 
-  h4 with gravatar
+  h2 with gravatar
   +User({
     _id:          '000000000000000000000000',
     displayName:  'saji',
@@ -44,7 +44,7 @@ section.atomic
     gravatarId:   '514a514108e2319cb0fb1f8c19abeaeb'
   });
 
-  h4 with no gravatar
+  h2 with no gravatar
   +User({
     _id:          '000000000000000000000000',
     displayName:  'Purple Robot',
@@ -52,7 +52,7 @@ section.atomic
     gravatarId:   '514a514108e2319cb0fb1f8c19abeae0'
   });
 
-  h4 bigger, with no gravatar
+  h2 bigger, with no gravatar
   +User({
     _id:          '000000000000000000000000',
     displayName:  'Purple Robot',
@@ -60,7 +60,7 @@ section.atomic
     gravatarId:   '514a514108e2319cb0fb1f8c19abeae0'
   }, 300);
 
-  h4 smaller, with no gravatar
+  h2 smaller, with no gravatar
   +User({
     _id:          '000000000000000000000000',
     displayName:  'Purple Robot',
@@ -102,7 +102,7 @@ mixin DayChooser(date, url)
         a.i18n(href=url + datesByToday[1]) go to today
 
 section.atomic
-  h3 +DayChooser
+  h1 +DayChooser
 
   +DayChooser('2001-01-01', '/404/')
 
@@ -112,7 +112,7 @@ mixin StandUp(plan, mine)
   - if (mine) classNames.push('mine');
   - if (plan.draft) classNames.push('draft');
   form.molecule_StandUp(class = classNames, id=plan._id, method='POST')
-    h3
+    h1
       +User(plan.user)
       label.draft-switch
         input(type='hidden',name='draft',disabled=!mine)
@@ -134,9 +134,9 @@ mixin StandUp(plan, mine)
         input(type='submit', value='Save').i18n
 
 section.atomic
-  h3 +StandUp
+  h1 +StandUp
 
-  h4 mine
+  h2 mine
 
   +StandUp(
     {
@@ -154,7 +154,7 @@ section.atomic
     true
   )
 
-  h4 not mine, draft
+  h2 not mine, draft
 
   +StandUp(
     {

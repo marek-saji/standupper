@@ -19,11 +19,14 @@ html
 section.atomic
 {
   padding:        0;
-  outline:        #888 dashed thin;
+  outline:        #888 dashed;
   margin-bottom:  1.5em;
 }
+section.atomic > h1,
+section.atomic > h2,
 section.atomic > h3,
-section.atomic > h4
+section.atomic > h4,
+section.atomic > p
 {
   font-size:  1em;
   margin:     0;

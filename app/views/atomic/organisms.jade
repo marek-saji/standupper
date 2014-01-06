@@ -14,7 +14,7 @@ mixin PageHeader(app_name, user)
         a(href='/deauth').i18n de-auth
 
 section.atomic
-  h3 +PageHeader
+  h1 +PageHeader
   +PageHeader('Application', {
     _id:          '000000000000000000000000',
     displayName:  'Red Robot',
@@ -50,5 +50,5 @@ mixin PageFooter()
         | .
 
 section.atomic
-  h3 +PageFooter
+  h1 +PageFooter
   +PageFooter()
