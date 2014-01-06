@@ -5,8 +5,8 @@ var Strategy  = require('passport-google').Strategy,
 
 module.exports = new Strategy(
   {
-    returnURL: 'http://' + serverCfg.host + ':' + serverCfg.port + '/auth/google/callback',
-    realm:     'http://' + serverCfg.host + ':' + serverCfg.port + '/'
+    returnURL: serverCfg.url + '/auth/google/callback',
+    realm:     serverCfg.url + '/'
   },
   function googleStrategyVerifier (identifier, profile, resolveVerification)
   {

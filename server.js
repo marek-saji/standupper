@@ -24,6 +24,7 @@ http.globalAgent.maxSockets = Infinity;
 
 server.listen(config.server.port, config.server.host);
 console.log('Listening on ' + config.server.host + ':' + config.server.port);
+console.log('Server should be available at ' + config.server.url);
 
 require('./config/express')(app, server, config);
 require('./config/routes')(app, config);

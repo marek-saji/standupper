@@ -9,8 +9,12 @@ defaults = {
   },
   root: rootPath,
   server: {
+    // Server will listen for requests on host + port
     host: '0.0.0.0',
     port: 3000,
+    // url will be used to build links, when communicating with external
+    // systems (e.g. github, facebook and other auth providers)
+    url: 'http://localhost:3000',
     livereload: {
       port: 35729
     }

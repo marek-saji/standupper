@@ -9,7 +9,7 @@ module.exports = new Strategy(
   {
     clientID:     keysCfg.id,
     clientSecret: keysCfg.secret,
-    callbackURL:  'http://' + serverCfg.host + ':' + serverCfg.port + '/auth/facebook/callback',
+    callbackURL:  serverCfg.url + '/auth/facebook/callback',
     scope:        [ 'email' ]
   },
   function faceBookStrategyVerifier (accessToken, refreshToken, profile, resolveVerification)

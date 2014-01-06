@@ -9,7 +9,7 @@ module.exports = new Strategy(
   {
     consumerKey:    keysCfg.id,
     consumerSecret: keysCfg.secret,
-    callbackURL: 'http://' + serverCfg.host + ':' + serverCfg.port + '/auth/dropbox/callback'
+    callbackURL: serverCfg.url + '/auth/dropbox/callback'
   },
   function dropboxStrategyVerifier (token, tokenSecret, profile, resolveVerification)
   {
