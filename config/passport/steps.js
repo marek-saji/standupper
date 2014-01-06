@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
     Promise  = mongoose.Promise,
     User     = mongoose.model('User'),
-    find, prepare, save;
+    find, prepare, save,
+    crypto = require('crypto');
 
 
 // mongoose promises suck and pass only 1st arg to then()
@@ -43,7 +44,8 @@ prepare = function (result) {
       emails = result[1],
       profile = result[2],
       accessToken = result[3];
-  var promise = new Promise();
+  var promise = new Promise(),
+      md5;
 
   if (null === user)
   {
@@ -57,6 +59,13 @@ prepare = function (result) {
   }
 
   user.emails = (user.emails || []).concat(emails);
+
+  if (!user.avatarUrl && 0 < user.emails)
+  {
+    md5 = crypto.createHash('md5');
+    md5.update(user.emails[0]);
+    user.gravatarId = md5.digest('hex');
+  }
 
   user.ids.push({
     provider: profile.provider,

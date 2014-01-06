@@ -24,7 +24,7 @@ UserSchema.statics.findByEmails = function (emails) {
 
   if (emails.length)
   {
-    query.where('emails').elemMatch({ $in: emails });
+    query.where('emails').in( emails );
   }
   else
   {
