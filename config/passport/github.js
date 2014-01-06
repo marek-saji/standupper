@@ -20,7 +20,7 @@ var prepareGitHub = function (profile, accessToken) {
     path:      '/user/emails',
     headers: {
       'Authorization':  'token ' + accessToken,
-      'UserAgent':      'marek-saji/standupper'
+      'User-Agent':      'marek-saji/standupper'
     }
   }, function (res) {
     res.on('readable', function () {
