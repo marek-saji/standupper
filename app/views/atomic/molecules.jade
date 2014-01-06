@@ -17,11 +17,6 @@ mixin User(user, size)
     img.photo(width=size, height=size, src=avatarUrl)
     span.fn
       = user.displayName
-    // TODO debug stuff
-    small.providers
-      |  (
-      = user.ids.map(function (entry) { return entry.provider; }).join(', ')
-      | )
 
 section.atomic
   h1 +User
