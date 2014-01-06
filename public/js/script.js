@@ -68,10 +68,21 @@ function getParentByClassName (className, element)
 
   if (socket)
   {
+    var newUsers = [];
     socket.on('update', function (data) {
       var context = document.getElementById(data._id),
           element,
           name;
+      if (null === context)
+      {
+        if (-1 === newUsers.indexOf(data._id))
+        {
+          newUsers.push(data._id);
+          alert('New user arrived in this day. Refresh to reveal.');
+        }
+        return;
+      }
+
       for (name in data)
       {
         if (data.hasOwnProperty(name))
