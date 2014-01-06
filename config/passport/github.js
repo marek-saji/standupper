@@ -15,7 +15,7 @@ var prepareGitHub = function (profile, accessToken) {
   }
 
   // emails
-  var request = https.get({
+  https.get({
     hostname:  'api.github.com',
     path:      '/user/emails',
     headers: {
@@ -23,11 +23,12 @@ var prepareGitHub = function (profile, accessToken) {
       'User-Agent':      'marek-saji/standupper'
     }
   }, function (res) {
-    res.on('readable', function () {
-      var chunk,
-          json = '',
-          emails;
-      while (chunk = res.read()) json += chunk;
+    var json = '';
+
+    res.on('data', function (data) {
+      json += data;
+    });
+    res.on('end', function () {
       try
       {
         profile.emails = JSON.parse(json).map(function (email) {
@@ -40,9 +41,9 @@ var prepareGitHub = function (profile, accessToken) {
       }
       promise.fulfill(profile);
     });
+  }).on('error', function (error) {
+    promise.reject(error);
   });
-
-  request.on('error', promise.reject);
 
   return promise;
 };
