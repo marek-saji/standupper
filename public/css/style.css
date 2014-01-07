@@ -65,6 +65,7 @@ section.atomic > p
 .molecule_DayChooser input[type=date]
 {
   font-size: 1.6em;
+  text-align: center;
 }
 .molecule_DayChooser input[type=submit]
 {
@@ -83,11 +84,20 @@ section.atomic > p
 .molecule_DayChooser input[type=date]::inner-spin-button
 { display: none; }
 
+@media all and (max-width: 20em)
+{
+  .molecule_DayChooser input[type=date]
+  {
+    float: left;
+    width: 100%;
+  }
+}
+
 /* StandUp */
 
-.molecule_StandUp
+.molecule_StandUp > form > h1 .molecule_User .photo
 {
-  padding-left: 5.25em;
+  float: left;
 }
 
 .molecule_StandUp > form > h1
@@ -95,42 +105,19 @@ section.atomic > p
   font-size: 1.5em;
   color: #555;
   font-weight: normal;
-  margin: 1em 0 0.5em -3.5em;
-}
-
-.molecule_StandUp > form > h1 .molecule_User .photo
-{
-  vertical-align: top;
-  float: left;
-}
-.molecule_StandUp.mine > form > h1 .molecule_User .fn
-{
-  color: #5884AD;
 }
 
 .molecule_StandUp > form > fieldset
 {
+  clear: both;
   padding: 0;
   border: #aaa solid thin;
   margin-top: 1em;
   transition: background-color 0.2s ease-in;
 }
-.molecule_StandUp .draft-switch
-{
-  margin-left: 1em;
-}
-.molecule_StandUp:not(.mine) .draft-switch input,
-.molecule_StandUp:not(.mine):not(.draft) .draft-switch
-{
-  display: none;
-}
 .molecule_StandUp.draft > form > fieldset
 {
   background-color: #fea;
-}
-.molecule_StandUp .draft-switch
-{
-  color: orange;
 }
 .molecule_StandUp > form > fieldset > legend
 {
@@ -140,19 +127,25 @@ section.atomic > p
   color: #666;
 }
 
-@media all and (min-width: 80em)
+.molecule_StandUp.mine > form > h1 .molecule_User .fn
 {
-  .molecule_StandUp > form > fieldset
-  {
-    width: 32.99%;
-    float: left;
-  }
-  .molecule_StandUp::after
-  {
-    content: '';
-    display:block;
-    clear: both;
-  }
+  color: #5884AD;
+}
+
+.molecule_StandUp .draft-switch
+{
+  margin-left: 1em;
+  white-space: nowrap;
+  transition: color 0.2s ease-in;
+}
+.molecule_StandUp.draft .draft-switch
+{
+  color: orange;
+}
+.molecule_StandUp:not(.mine) .draft-switch input,
+.molecule_StandUp:not(.mine):not(.draft) .draft-switch
+{
+  display: none;
 }
 
 .molecule_StandUp .planEntries
@@ -178,6 +171,68 @@ section.atomic > p
 {
   font-size: 1.5em;
 }
+.molecule_StandUp .planEntries
+{
+  width: 100%;
+  min-height: 3em;
+  border: none;
+  padding: 1em;
+  margin: 0;
+  font-family: sans;
+  white-space: pre-wrap;
+  font-size: 1em;
+  background-color: transparent;
+  color: inherit;
+  resize: vertical;
+}
+
+.molecule_StandUp .buttons
+{
+  text-align: right;
+}
+.molecule_StandUp .buttons input[type=submit]
+{
+  font-size: 1.5em;
+}
+
+@media all and (min-width: 40em)
+{
+  .molecule_StandUp
+  {
+    padding-left: 5.25em;
+  }
+
+  .molecule_StandUp > form > h1
+  {
+    margin: 1em 0 0.5em -3.5em;
+  }
+
+  .molecule_StandUp > form > h1 .molecule_User .photo
+  {
+    vertical-align: top;
+  }
+
+  .molecule_StandUp > form > fieldset
+  {
+    clear: none;
+  }
+}
+
+@media all and (min-width: 80em)
+{
+  .molecule_StandUp > form > fieldset
+  {
+    width: 32.99%;
+    float: left;
+  }
+  .molecule_StandUp::after
+  {
+    content: '';
+    display:block;
+    clear: both;
+  }
+}
+
 
 /* ORGANISMS */
 
