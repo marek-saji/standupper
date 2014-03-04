@@ -99,4 +99,4 @@ module.exports = {
   find:    find,
   prepare: prepare,
   save:    save
-}
+};

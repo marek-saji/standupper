@@ -6,7 +6,7 @@ var Strategy = require('passport-github').Strategy,
 
 
 var prepareGitHub = function (profile, accessToken) {
-  var promise = new Promise;
+  var promise = new Promise();
 
   // photos
   if (!profile.photos)
